@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dip"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:paddingLeft="5dp"
+    android:paddingTop="5dp"
+    android:paddingRight="5dp"
+    android:background="@drawable/my_listview_item"
+    android:padding="5dp">
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/messagebutton"
+        android:src="@android:drawable/ic_dialog_email"
+        android:background="@color/backgroundimagebutton"
+        android:tint="@android:color/darker_gray"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="@string/pay"
+        android:id="@+id/paybutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/oratext"
+        android:layout_toStartOf="@+id/oratext"
+        android:layout_above="@+id/ratingBar2"
+        android:layout_alignParentTop="true"
+        android:textSize="12sp"
+        android:textColor="@android:color/holo_red_dark"
+        android:clickable="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Name"
+        android:id="@+id/nametext"
+        android:layout_alignBaseline="@+id/paybutton"
+        android:layout_alignBottom="@+id/paybutton"
+        android:layout_toEndOf="@+id/firstprofile"
+        android:layout_toRightOf="@+id/firstprofile" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/firstprofile"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:src="@mipmap/sf1"
+        android:layout_weight="1.38"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/ratingBar2" />
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBar2"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        android:contextClickable="false"
+        style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
+
+        android:layout_below="@+id/messagebutton"
+        android:layout_toRightOf="@+id/firstprofile"
+        android:layout_toEndOf="@+id/firstprofile" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="20:45"
+        android:id="@+id/oratext"
+        android:layout_below="@+id/viatext"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="via"
+        android:id="@+id/viatext"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:layout_below="@+id/firstprofile"
+        android:layout_toRightOf="@+id/imageView8"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="16/02/2016"
+        android:id="@+id/datatext"
+        android:layout_below="@+id/imageView8"
+        android:layout_toRightOf="@+id/imageView8"
+        android:layout_toEndOf="@+id/imageView8" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_calendar_check"
+        android:id="@+id/imageView9"
+        android:layout_below="@+id/imageView8"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/datatext" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/azur_marker"
+        android:id="@+id/imageView8"
+        android:layout_below="@+id/firstprofile"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/viatext"
+        android:layout_alignRight="@+id/imageView9"
+        android:layout_alignEnd="@+id/imageView9" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="€/h"
+        android:id="@+id/textView8"
+        android:layout_above="@+id/viatext"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="3,45"
+        android:id="@+id/tariffatext"
+        android:layout_alignBaseline="@+id/textView8"
+        android:layout_alignBottom="@+id/textView8"
+        android:layout_toLeftOf="@+id/textView8"
+        android:layout_toStartOf="@+id/textView8" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_clock"
+        android:layout_alignBottom="@+id/oratext"
+        android:layout_toStartOf="@+id/oratext"
+        android:id="@+id/imageView10"
+        android:layout_below="@+id/viatext"
+        android:layout_toLeftOf="@+id/oratext" />
+
+
+</RelativeLayout>

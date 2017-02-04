@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id = "@+id/visibility_on"
+        android:title ="@string/visibility_on"
+        android:icon="@drawable/ic_visibility_on"/>
+
+    <item
+        android:id = "@+id/visibility_off"
+        android:title ="@string/visibility_off"
+        android:icon="@drawable/ic_visibility_off"/>
+
+
+
+    <!--<item android:id="@+id/nav_switch"
+    app:actionLayout="@layout/switchitem"
+    android:title="@string/visibility"
+    />-->
+    <item
+        android:title="Kiuer">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/search_helper"
+                    android:icon="@drawable/ic_search_helper"
+                    android:title="@string/searchhelper"/>
+                <item
+                    android:id="@+id/helpers"
+                    android:icon="@drawable/ic_helpers"
+                    android:title="@string/your_helpers" />
+               <!-- <item
+                    android:id="@+id/helperside"
+                    android:icon="@drawable/ic_helperside"
+                    android:title="@string/helperside"/>-->
+                <!--<item android:id="@+id/addrate"
+                    android:title="@string/addrate"
+                    android:icon="@drawable/ic_feedback"/>
+                <item
+                    android:id="@+id/feedbackview"
+                    android:title="@string/showfeedback"
+                    android:icon="@drawable/ic_addrate"/>-->
+            </group>
+        </menu>
+    </item>
+
+  <!--  <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/helpers"
+            android:icon="@drawable/ic_helpers"
+            android:title="@string/your_helpers" />
+        <item
+            android:id="@+id/helperside"
+            android:icon="@drawable/ic_helperside"
+            android:title="@string/helperside"/>
+    </group>-->
+    <item
+        android:title="Helper">
+
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/current_queue"
+                    android:icon="@drawable/ic_helperside"
+                    android:title="@string/current_queue2"/>
+                <item
+                    android:id="@+id/nav_your_kiuwer"
+                    android:icon="@drawable/ic_your_kiuwer"
+                    android:title="@string/action_kiuwer_requests"
+                    app:actionViewClass = "android.widget.TextView"/>
+                <!--<item
+                    android:id="@+id/nav_rate"
+                    android:icon="@drawable/ic_rate"
+                    android:title="@string/action_rate_kiuwer" />
+                <item
+                    android:id="@+id/nav_show_feedback"
+                    android:icon="@drawable/ic_show_feedback"
+                    android:title="@string/action_show_feedback" />-->
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="@string/feedback">
+        <menu>
+        <group android:checkableBehavior="single">
+            <item
+                android:id="@+id/feedbackview"
+                android:title="@string/showfeedback"
+                android:icon="@drawable/ic_addrate"/>
+            <item android:id="@+id/addrate"
+                android:title="@string/addrate"
+                android:icon="@drawable/ic_feedback"/>
+        </group>
+        </menu>
+    </item>
+
+    <item android:title="@string/other">
+        <menu>
+            <item
+                android:id="@+id/log_out"
+                android:icon="@drawable/ic_logout"
+                android:title="@string/logout" />
+        </menu>
+    </item>
+
+</menu>

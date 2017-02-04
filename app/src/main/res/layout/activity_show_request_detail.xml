@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingTop="8dp"
+    tools:context=".helper.ShowRequestDetailActivity">
+
+
+    <!-- android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin" -->
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/accept_bttn"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/relativeLayout2"
+        android:background="@drawable/my_floating_frame"
+        android:paddingBottom="10dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
+
+
+        <fragment
+            android:id="@+id/preview_map"
+            class="com.google.android.gms.maps.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/get_driving_direction_bttn"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/imageView13"
+            android:paddingBottom="10dp" />
+
+        <Button
+            android:id="@+id/get_driving_direction_bttn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/get_driving_direction" />
+
+        <ImageView
+            android:id="@+id/imageView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/acrd_location_mod"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            app:srcCompat="@mipmap/azur_marker" />
+
+        <TextView
+            android:id="@+id/acrd_location_mod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imageView13"
+            android:layout_toRightOf="@+id/imageView13"
+            android:paddingBottom="10dp"
+            android:paddingTop="5dp"
+            android:text="Large Text" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/accept_bttn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="23dp"
+        android:layout_marginRight="23dp"
+        android:text="@string/accept" />
+
+    <Button
+        android:id="@+id/ignore_bttn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="18dp"
+        android:layout_marginStart="18dp"
+        android:text="@string/ignore" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="90dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/my_floating_frame"
+        android:paddingBottom="10dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
+
+
+        <TextView
+            android:id="@+id/acrd_kiuwer_mod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/acrd_kiuwer_lbl"
+            android:layout_alignBottom="@+id/acrd_kiuwer_lbl"
+            android:layout_toEndOf="@+id/acrd_kiuwer_lbl"
+            android:layout_toRightOf="@+id/acrd_kiuwer_lbl"
+            android:clickable="true"
+            android:paddingBottom="10dp"
+            android:text="Large Text" />
+
+        <TextView
+            android:id="@+id/acrd_rate_lbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/acrd_date_mod"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/acrd_kiuwer_mod"
+            android:text="@string/rate" />
+
+        <TextView
+            android:id="@+id/acrd_kiuwer_lbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:paddingBottom="10dp"
+            android:text="@string/kiuwer" />
+
+        <LinearLayout
+            android:id="@+id/linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/imageView14"
+
+            android:layout_toEndOf="@+id/acrd_kiuwer_lbl"
+            android:layout_toRightOf="@+id/acrd_kiuwer_lbl"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/acrd_time_mod"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/acrd_time_mod"
+            android:layout_toStartOf="@+id/acrd_time_mod"
+            app:srcCompat="@mipmap/ic_clock" />
+
+        <TextView
+            android:id="@+id/acrd_rate_mod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/acrd_rate_lbl"
+            android:layout_toLeftOf="@+id/acrd_rate_lbl"
+            android:layout_toStartOf="@+id/acrd_rate_lbl"
+            android:text="Large Text" />
+
+        <TextView
+            android:id="@+id/acrd_time_mod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="Large Text" />
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignBottom="@+id/acrd_date_mod"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/acrd_kiuwer_lbl"
+            app:srcCompat="@mipmap/ic_calendar_check" />
+
+        <TextView
+            android:id="@+id/acrd_note_mod"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/acrd_rate_lbl"
+            android:layout_toEndOf="@+id/imageView11"
+            android:layout_toRightOf="@+id/imageView11"
+            android:editable="false"
+            android:paddingTop="10dp"
+            android:singleLine="false"
+            android:text="No Note" />
+
+        <TextView
+            android:id="@+id/acrd_date_mod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/acrd_kiuwer_mod"
+            android:layout_toEndOf="@+id/imageView11"
+            android:layout_toRightOf="@+id/imageView11"
+            android:text="Large Text" />
+
+        <ImageView
+            android:id="@+id/imageView14"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/imageView11"
+            app:srcCompat="@drawable/ic_note" />
+
+        <Button
+            android:id="@+id/negotiates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/linearlayout"
+            android:layout_below="@+id/imageView12"
+            android:layout_toLeftOf="@+id/acrd_rate_mod"
+            android:layout_toStartOf="@+id/acrd_rate_mod"
+            android:padding="5dip"
+            android:text="Rinegozia"
+            tools:text="rinegozia" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_drawer_open">Apri navigation drawer</string>
+    <string name="navigation_drawer_close">Chiudi navigation drawer</string>
+    <string name="action_settings">Impostazioni</string>
+
+    <string name="rate">€/h</string>
+    <string name="note">Note:</string>
+    <string name="searchHintStr">Cerca helper vicino a...</string>
+    <string name="noteHintStr">Note...</string>
+    <string name="favorite">Preferiti:</string>
+    <string name="new_request_for_queue">Hai una nuova richiesta per una coda!</string>
+    <string name="new_kiu_request">Nuova richiesta per Kiu\'</string>
+    <string name="kiuwer">Kiuwer:</string>
+    <string name="helper">Helper:</string>
+    <string name="time">Ora:</string>
+    <!-- <string name="date">Data:</string> -->
+    <string name="location">Luogo:</string>
+    <string name="get_driving_direction">Ottieni indicazioni stradali</string>
+    <string name="accept">Accetta</string>
+    <string name="ignore">Ignora</string>
+    <string name="more">piu\'</string>
+    <string name="email">Email:</string>
+    <string name="password">Password:</string>
+    <string name="repete_password">Ripeti Password:</string>
+    <string name="profile_img_txt">Scatta una foto per il tuo account oppure scegline una dalla galleria</string>
+    <string name="sign_in">Accedi</string>
+    <string name="required">Richiesto.</string>
+    <string name="pwdDifferent">Le password non corrispondono!</string>
+    <string name="auth_failed">Autenticazione fallita!</string>
+    <string name="password_too_short">La lunghezza minima della password e\' 6 caratteri.</string>
+    <string name="loading">Caricamento.</string>
+    <string name="no_feedbacks">Non sono presenti feedback.</string>
+
+    <!-- IVAN -->
+    <string name="addrate">Lascia un feedback</string>
+    <string name="cancelbutton">Annulla</string>
+    <string name="chooser">Manda una mail con</string>
+    <string name="comment_rate">Lascia un commento qui:</string>
+    <string name="confirmbutton">Ok</string>
+    <string name="dialogmessage">Sei sicuro di uscire?</string>
+    <string name="evaluate">Valuta la tua esperienza</string>
+    <string name="feedback">Feedback</string>
+    <string name="hello_blank_fragment"></string>
+    <string name="home">Home</string>
+    <string name="kiuwermail">Email</string>
+    <string name="kiuwername">Nome</string>
+    <string name="kiuwersurname">Cognome</string>
+    <string name="logout">Disconnetti</string>
+    <string name="message">Scrivi il tuo messaggio...</string>
+    <string name="oggetto">Oggetto</string>
+    <string name="other">Altro</string>
+    <string name="public_comment">PUBBLICA</string>
+    <string name="ratehelper">Vota Helper</string>
+    <string name="select">Seleziona</string>
+    <string name="share_experience">Com\'è stata la tua esperienza con questo Helper?</string>
+    <string name="showfeedback">Mostra Feedback</string>
+    <string name="your_feedback_about">TUO FEEDBACK SU</string>
+    <string name="your_helpers">I tuoi Helper</string>
+    <string name="filapresso">In fila presso:</string>
+    <string name="date">In data:</string>
+    <string name="orario">Ora:</string>
+    <string name="Excellent">Eccellente</string>
+    <string name="Verygood"> Molto Buono</string>
+    <string name="Good">Buono</string>
+    <string name="mediocre">Mediocre</string>
+    <string name="verybad">Molto male</string>
+    <string-array name="spinner_rate">
+        <item>@string/Excellent</item>
+        <item>@string/Verygood</item>
+        <item>@string/Good</item>
+        <item>@string/mediocre</item>
+        <item>@string/verybad</item>
+    </string-array>
+    <string name="helperside">Diventa Helper</string>
+    <string name="kiuerside">Diventa Kiuer</string>
+    <string name="leavefeedback">Lascia un feedback</string>
+    <!-- END IVAN -->
+
+    <string name="current_queue2">Fila in corso</string>
+    <string name="login">Login</string>
+    <string name="signed_up">Registrati</string>
+    <string name="text_signed_up">Non hai un account?</string>
+    <string name="changepass">Modifica Password</string>
+    <!-- END IVAN -->
+
+    <!--DONATO-->
+    donato, [08.09.16 19:25]
+    <string name="action_logout">Esci</string>
+    <string name="action_kiuwer_requests">Richieste dei Kiuer</string>
+    <string name="action_rate_kiuwer">Lascia Feedback</string>
+    <string name="action_show_feedback">Mostra Feedback</string>
+    <string name="menu_other">Altro</string>
+    <string name="current_queue">FILA IN CORSO</string>
+    <string name="current_kiuwer">Sei in fila per conto di:</string>
+    <string name="date_d">Data:</string>
+    <string name="start">Inizio:</string>
+    <string name="presso">Presso:</string>
+    <string name="rate_d">Tariffa:</string>
+    <string name="button_directions">OTTIENI INDICAZIONI</string>
+    <string name="button_start_queue">INIZIA LA FILA</string>
+    <string name="next_queues">PROSSIME FILE</string>
+    <string name="time_passed">Tempo Trascorso:</string>
+    <string name="no_queue">Nessun elemento al momento disponibile</string>
+    <string name="contact">CONTATTI</string>
+    <string name="message_logout">Vuoi uscire adesso?</string>
+    <string name="yes_option">Si</string>
+    <string name="feedback_received">feedback ricevuti</string>
+    <string name="avarage_rating"> valutazione media:</string>
+    <string name="which">DI CUI</string>
+    <string name="all_feed">TUTTI I FEEDBACK</string>
+    <string name="top_of_the_top">Il top del top</string>
+    <string name="very_good">Molto buono</string>
+    <string name="decent">Discreto</string>
+    <string name="disappointing">Deludente</string>
+    <string name="very_bad">Pessimo</string>
+    <string name="queue_location">Fila presso:</string>
+    <string name="visibility">Visibilità</string>
+    <string name="cancel">ANNULLA</string>
+    <string name="done">FATTO</string>
+    <string name="Start_time">Ora Inizio</string>
+    <string name="End_time">Ora Fine</string>
+    <string name="weekly">Ripetizione settimanale</string>
+    <string name="set_availability">Imposta Disponibilità</string>
+    <string name="availability">Disponibilità</string>
+    <string name="from">Da:</string>
+    <string name="to">A:</string>
+    <string name="empty_data">Devi inserire un intervallo di tempo!</string>
+    <string name="warning">Avviso!</string>
+    <string name="save_availability">Salva Disponibilità</string>
+    <string name="question_save_availability">Vuoi salvare lo stato di questa disponibilità?</string>
+    <string name="searchhelper">Cerca Helper</string>
+    <!--END IVAN-->
+
+    <!--DIEGO -->
+    <string name="search">Raggio: </string>
+    <string name="AlertTitle">Invio richiesta</string>
+    <string name="AlertMessage">Sei sicuro di voler inviare la richiesta?</string>
+    <string name="search_layout">Raggio di ricerca: Km</string>
+    <string name="notification">Disponibilità attiva.Premi per le impostazioni</string>
+    <string name="visibility_on">Visibilità on</string>
+    <string name="visibility_off">Visibilità off</string>
+    <string name="send_request">INVIA RICHIESTA</string>
+    <string name="your_search">La tua ricerca:</string>
+    <string name="send_email">Invia\nEmail</string>
+    <string name="object">Pagamento per la fila</string>
+    <string name="final_message">Gentile helper, ti ringrazio per il servizio offerto.\nVorrei incontrarti per il pagamento.</string>
+    <string name="pay">Paga</string>
+    <!--FINE DIEGO-->
+
+    <string name="text_negotiates">NEGOZIA</string>
+    <string name="negotiates"> "Modifica il prezzo"</string>
+
+</resources>

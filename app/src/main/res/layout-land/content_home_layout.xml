@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.domain.my.giuseppe.kiu.kiuwer.Kiuwer"
+    android:id="@+id/content_home_layout">
+    <!-- tools:showIn="@layout/app_bar_search" -->
+
+    <!--android:paddingBottom="@dimen/activity_vertical_margin"-->
+    <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingTop="@dimen/activity_vertical_margin"-->
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/frameLayout"
+        android:background="@color/primary"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="date"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:id="@+id/dateED"
+                        android:textColor="@color/icons_text"
+                        android:layout_alignParentEnd="false"
+                        android:layout_alignParentRight="false"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageView5"
+                        android:src="@mipmap/ic_calendar_check"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/dateED"/>
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="time"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:id="@+id/timeED"
+                        android:textColor="@color/icons_text"
+                        android:layout_alignParentTop="true"
+                        android:layout_toLeftOf="@+id/imageView6"
+                        android:layout_toStartOf="@+id/imageView6" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageView6"
+                        android:src="@mipmap/ic_clock"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="false" />
+                </RelativeLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                </RelativeLayout>
+            </TableRow>
+
+            <TableRow android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:ems="10"
+                        android:id="@+id/rateED"
+                        android:textColor="@color/icons_text"
+                        android:width="@dimen/rateEDWidth" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rate"
+                        android:id="@+id/rateLB"
+                        android:textSize="@dimen/labelFontSize"
+                        android:autoText="false"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/rateED"
+                        android:layout_toEndOf="@+id/rateED"
+                        android:textColor="@color/icons_text"
+                        android:paddingRight="@dimen/rateLBRightPadding" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/noteED"
+                        android:hint="@string/noteHintStr"
+                        android:layout_toEndOf="@id/rateLB"
+                        android:layout_toRightOf="@+id/rateLB"
+                        android:textColor="@color/icons_text"
+                        android:textColorHint="@color/icons_text" />
+                </RelativeLayout>
+            </TableRow>
+        </TableLayout>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frameLayout"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:id="@+id/linearLayout4">
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/linearLayout4"
+        android:layout_alignParentBottom="true">
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <!--<fragment
+                   android:id="@+id/autocomplete_research"
+                   class="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                   android:layout_column="0"
+                   android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"/> -->
+                <Button
+                    android:id="@+id/searchBTTN"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/searchHintStr"/>
+            </TableRow>
+
+            <TableRow android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearLayout">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_low"
+                        android:layout_marginBottom="@dimen/margin_low">
+
+                    </android.support.v7.widget.CardView>
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/favorite"
+                    android:id="@+id/favoriteED"
+                    android:textSize="@dimen/abc_text_size_large_material" />
+            </TableRow>
+
+            <TableRow android:layout_height="wrap_content"
+                android:layout_width="fill_parent">
+                <include
+                    layout="@layout/pref_list_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </TableRow>
+
+        </TableLayout>
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search_layout"
+        android:id="@+id/textView26"
+        android:layout_gravity="left|bottom"
+        android:textColor="@color/icons_text"
+        android:textSize="@dimen/labelFontSize"
+        android:layout_above="@+id/linearLayout4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="155dp"
+        android:layout_marginStart="155dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rayspinner"
+        android:layout_above="@+id/linearLayout4"
+        android:layout_toRightOf="@+id/textView26"
+        android:layout_toEndOf="@+id/textView26"
+        android:layout_marginLeft="49dp"
+        android:layout_marginStart="49dp"
+        android:transitionGroup="true" />
+
+    <!-- <FrameLayout android:name="universit.ivasco92.kiu.fragmenthome"
+         android:id="@+id/content"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_alignParentTop="true"
+         android:layout_alignParentRight="true"
+         android:layout_alignParentEnd="true" /> -->
+
+
+
+</RelativeLayout>
