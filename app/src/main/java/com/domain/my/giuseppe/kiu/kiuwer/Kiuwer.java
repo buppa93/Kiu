@@ -52,7 +52,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -235,12 +234,15 @@ public class Kiuwer extends AppCompatActivity
             Log.d(TAG, "Lancio GetProfileImg (doInBackground)");
             auth = FirebaseAuth.getInstance();
             user = auth.getCurrentUser();
-            String email = user.getEmail();
+            Log.d(TAG,"l'usermail: "+user.getEmail());
+            String email = user.getEmail().toString();
             StorageReference storageReference = FirebaseStorage.getInstance().getReference();
             StorageReference reference = storageReference.child(email + ".jpg");
 
             final long ONE_MEGABYTE = 1024 * 1024;
             reference.getBytes(ONE_MEGABYTE).addOnSuccessListener(this);
+
+
 
             return null;
         }
@@ -250,14 +252,6 @@ public class Kiuwer extends AppCompatActivity
         {
             super.onPostExecute(aVoid);
             Log.d(TAG, "GetProfileImg (onPostExecute)");
-        }
-
-        @Override
-        public void onFailure(@NonNull Exception e)
-        {
-            Log.d(TAG, "GetProfileImg (onFailure)");
-            bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(),
-                    R.drawable.user1);
             navigationView = (NavigationView) findViewById(R.id.nav_view);
             headerLayout = navigationView.getHeaderView(0);
             kiuwerName = (TextView) headerLayout.findViewById(R.id.kiuwername);
@@ -266,6 +260,14 @@ public class Kiuwer extends AppCompatActivity
             kiuwerName.setText(User.getUserName(user.getEmail()));
             kiuwerMail.setText(user.getEmail());
 
+        }
+
+        @Override
+        public void onFailure(@NonNull Exception e)
+        {
+            Log.d(TAG, "GetProfileImg (onFailure)");
+            bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(),
+                    R.drawable.user1);
             firstProfile = (de.hdodenhof.circleimageview.CircleImageView) headerLayout
                     .findViewById(R.id.firstprofile);
             firstProfile.setImageBitmap(bitmap);
@@ -280,12 +282,12 @@ public class Kiuwer extends AppCompatActivity
             bitmap = BitmapFactory.decodeByteArray(this.imgBuffer, 0, this.imgBuffer.length);
             navigationView = (NavigationView) findViewById(R.id.nav_view);
             headerLayout = navigationView.getHeaderView(0);
-            kiuwerName = (TextView) headerLayout.findViewById(R.id.kiuwername);
+           /* kiuwerName = (TextView) headerLayout.findViewById(R.id.kiuwername);
             kiuwerMail = (TextView) headerLayout.findViewById(R.id.kiuwermail);
 
             kiuwerName.setText(User.getUserName(user.getEmail()));
             kiuwerMail.setText(user.getEmail());
-
+*/
             firstProfile = (de.hdodenhof.circleimageview.CircleImageView) headerLayout
                     .findViewById(R.id.firstprofile);
             firstProfile.setImageBitmap(bitmap);
@@ -330,16 +332,6 @@ public class Kiuwer extends AppCompatActivity
                         nFeedback++;
                     }
                 }
-
-                /*for (HashMap.Entry<String, Object> entry : data.entrySet())
-                {
-                    Log.d(TAG, "KEY -> " + entry.getKey() + " -- " + entry.getValue().toString());
-                    HashMap<String, String> feedbackEntry = (HashMap<String, String>)
-                            entry.getValue();
-                    average += Integer.parseInt(feedbackEntry
-                            .get(RemoteDatabaseString.KEY_FEEDBACK_RATING).toString());
-                    nFeedback++;
-                }*/
 
                 average /= nFeedback;
                 rb.setRating(average);
@@ -401,7 +393,7 @@ public class Kiuwer extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Fragment fragment;
-       // boolean isChecked = false;
+        // boolean isChecked = false;
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         final RemoteDBAdapter re= new RemoteDBAdapter();
@@ -601,4 +593,3 @@ public class Kiuwer extends AppCompatActivity
 
 
 }
-
