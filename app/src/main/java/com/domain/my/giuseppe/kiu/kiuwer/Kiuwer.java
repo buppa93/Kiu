@@ -181,22 +181,7 @@ public class Kiuwer extends AppCompatActivity
 
     @Override
     public void onStart()
-    {
-        super.onStart();
-
-        //TODO Test keep feedback
-        User test = new User("yes", "test-user@test.net", 0, 0, "http://test.domain.net",
-                "vfsadbmcfnhdfadhfakjfd", "testUser");
-
-        RemoteDBAdapter db = new RemoteDBAdapter();
-        /*Feedback oldFeedback = db.getLastFeedback("testUser");
-        oldFeedback = db.lastFeedback;
-        Log.d(TAG, "OLD FEEDBACK -> " + oldFeedback.toString());
-        int no = Integer.parseInt(oldFeedback.getFeedbackno());
-        no += 1;
-        Feedback feedback = new Feedback("Suca", "5", "Test feedback number");
-        db.leaveFeedback("testUser", feedback);*/
-    }
+    {super.onStart();}
 
     @Override
     public void onResume()

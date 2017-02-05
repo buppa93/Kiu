@@ -16,11 +16,14 @@ import android.widget.ListView;
 import com.domain.my.giuseppe.kiu.R;
 import com.domain.my.giuseppe.kiu.localdatabase.DatabaseListHelperAdapter;
 
+import java.nio.ByteBuffer;
+
 //import com.domain.my.giuseppe.kiu.utils.Helpers;
 
 
 public class FragmentAddRate extends Fragment {
     private static final String NAME="name";
+    private static final String PROFILE_IMG = "profileImg";
     private static final String THUMBNAIL = "thumbnail";
     View rootView;
     ListView addrate;

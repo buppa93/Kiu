@@ -13,7 +13,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@mipmap/sf1"
+        android:src="@drawable/user1"
         android:layout_weight="1.38"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"

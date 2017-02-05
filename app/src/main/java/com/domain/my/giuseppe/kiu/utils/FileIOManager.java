@@ -27,7 +27,6 @@ import java.util.StringTokenizer;
 /**
  * Created by giuseppe on 07/07/16.
  */
-//TODO aggiungere il token marker
 public class FileIOManager implements OnSuccessListener, OnFailureListener
 {
     private static final String TAG = FileIOManager.class.getSimpleName();
@@ -137,7 +136,6 @@ public class FileIOManager implements OnSuccessListener, OnFailureListener
         return mediaFile;
     }
 
-    //TODO da vedere se ritornare la stessa stringbuffer o meno
     public StringBuffer read() throws IOException
     {
         FileInputStream fis = null;

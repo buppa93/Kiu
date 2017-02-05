@@ -356,7 +356,7 @@ public class RemoteDBAdapter
         });
 
     }
-    //TODO non recupera i dati
+
     /**
      * Search username of kiuer by token.
      * @param token user's token

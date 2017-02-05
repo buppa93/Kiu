@@ -16,20 +16,30 @@ import android.widget.TextView;
 import com.domain.my.giuseppe.kiu.R;
 import com.domain.my.giuseppe.kiu.model.User;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDBAdapter;
+import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDatabaseString;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 /**
  * Created by ivasco92 on 02/09/16.
  */
-public class AddRateDbAdapter extends CursorAdapter {
+public class AddRateDbAdapter extends CursorAdapter implements ValueEventListener
+{
+    private static final String TAG = "AddRateDbAdapter";
+
     TextView namefield;
     TextView filapresso;
     TextView addressfield;
     String name;
     String address;
+    String email;
     RemoteDBAdapter remoteDBAdapter;
     de.hdodenhof.circleimageview.CircleImageView imageView;
     public static User currentUserIstance;
@@ -49,7 +59,7 @@ public class AddRateDbAdapter extends CursorAdapter {
     // The bindView method is used to bind all data to a given view
     // such as setting the text on a TextView.
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, final Context context, Cursor cursor) {
         currentUserIstance = new User();
         remoteDBAdapter = new RemoteDBAdapter();
         remoteDBAdapter.getDb();
@@ -66,9 +76,16 @@ public class AddRateDbAdapter extends CursorAdapter {
         name= cursor.getString(cursor.getColumnIndex(cursor.getColumnName(1))); //"username"
         address= cursor.getString(cursor.getColumnIndex(cursor.getColumnName(3)));//"address"
 
-        //TODO cambiare e mettere foto utente
+        //Recupero l'email dal database remoto
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference()
+                .child(RemoteDatabaseString.KEY_USER_NODE)
+                .child(name)
+                .child(RemoteDatabaseString.KEY_EMAIL);
+        reference.addListenerForSingleValueEvent(this);
+
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference thumbnailRef = storageRef.child("user1.png");
+        StorageReference thumbnailRef = storageRef.child(email + ".png");
 
         final long ONE_MEGABYTE = 1024 * 1024;
 
@@ -84,9 +101,7 @@ public class AddRateDbAdapter extends CursorAdapter {
         {
             @Override
             public void onFailure(@NonNull Exception e)
-            {
-                Log.d("AddRateDbAdapter", "Errore download thumbnail");
-            }
+            {Log.d("AddRateDbAdapter", "Errore download thumbnail");}
         });
 
 
@@ -96,4 +111,14 @@ public class AddRateDbAdapter extends CursorAdapter {
        // tvBody.setText(body);
         //tvPriority.setText(String.valueOf(priority));
     }
+
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot)
+    {
+        email = dataSnapshot.getValue(String.class);
+        Log.d(TAG, "email -> " + email);
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {}
 }
