@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Vector;
 
 public class FragmentsShowFeedback extends Fragment implements ValueEventListener
 {
@@ -109,19 +110,26 @@ public class FragmentsShowFeedback extends Fragment implements ValueEventListene
     @Override
     public void onDataChange(DataSnapshot dataSnapshot)
     {
-        HashMap<String, Object> data = (HashMap<String, Object>) dataSnapshot.getValue();
-        Feedback f = new Feedback();
+        ArrayList<Object> data = (ArrayList<Object>) dataSnapshot.getValue();
+        Feedback f;
 
         if(data != null)
         {
             arePresent = true;
-            for (HashMap.Entry<String, Object> entry : data.entrySet()) {
-                Log.d(TAG, "KEY -> " + entry.getKey() + " -- " + entry.getValue().toString());
-                HashMap<String, String> feedbackEntry = (HashMap<String, String>) entry.getValue();
-                f.setComment(feedbackEntry.get(RemoteDatabaseString.KEY_FEEDBACK_COMMENT));
-                f.setRating(feedbackEntry.get(RemoteDatabaseString.KEY_FEEDBACK_RATING));
-                f.setFeedbackno(entry.getKey());
-                feedbacks.add(f);
+            int i = 1;
+            for(Object o : data)
+            {
+                if(o != null)
+                {
+                    f = new Feedback();
+                    Log.d(TAG, "Sto cazzo di o -> " + o.toString());
+                    HashMap<String, String> entry = (HashMap<String, String>) o;
+                    f.setComment(entry.get(RemoteDatabaseString.KEY_FEEDBACK_COMMENT));
+                    f.setRating(entry.get(RemoteDatabaseString.KEY_FEEDBACK_RATING));
+                    f.setFeedbackno(String.valueOf(i));
+                    feedbacks.add(f);
+                    i++;
+                }
             }
 
             if (!arePresent) {makeAlertDialog();}

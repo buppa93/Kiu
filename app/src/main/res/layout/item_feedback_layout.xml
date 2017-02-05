@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/ratingBarView"
             android:theme="@style/RatingBar"
+            android:isIndicator="true"
             android:numStars="5" />
 
         <TextView
