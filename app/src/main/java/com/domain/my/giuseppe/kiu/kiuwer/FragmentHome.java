@@ -27,10 +27,12 @@ import android.widget.Spinner;
 import com.domain.my.giuseppe.kiu.R;
 import com.domain.my.giuseppe.kiu.localdatabase.DatabaseAdapter;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDBAdapter;
+import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDatabaseString;
 import com.domain.my.giuseppe.kiu.signin.SignInActivity;
 import com.domain.my.giuseppe.kiu.utils.DatePickerFragment;
 import com.domain.my.giuseppe.kiu.utils.PlaceView;
 import com.domain.my.giuseppe.kiu.utils.ResearchOpt;
+import com.domain.my.giuseppe.kiu.utils.SingletonObject;
 import com.domain.my.giuseppe.kiu.utils.TimePickerFragment;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
@@ -38,6 +40,11 @@ import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
@@ -62,6 +69,8 @@ public class FragmentHome extends Fragment
     String placeName;
     String placeAddress;
     LatLng coordinates;
+
+    String averagePrices;
 
     private static final String DATE="Date";
     private static final String TIME="Time";
@@ -108,67 +117,95 @@ public class FragmentHome extends Fragment
 
         //istanzio lo spinner per il raggio di ricerca
         spinner = (Spinner) rootView.findViewById(R.id.rayspinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this.getActivity(),
-                R.array.ray_array, android.R.layout.simple_spinner_item);
-        //Specify the layout to use when the list of choices appears
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter1);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                parent.getContext();
-                ray = Integer.parseInt(parent.getItemAtPosition(pos).toString());
-                // ray=parent.getItemAtPosition(pos).toString();
-            }
 
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+        //Referenza al nodo del db che contiene la media delle tariffe
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference()
+                .child(RemoteDatabaseString.KEY_AVERAGE_PRICES)
+                .child(RemoteDatabaseString.KEY_AVERAGE);
 
-        searchBar = new SupportPlaceAutocompleteFragment();
-        getFragmentManager().beginTransaction().replace(R.id.serachAutocompleteContainer,
-                searchBar).commit();
-
-        searchBar.setOnPlaceSelectedListener(new PlaceSelectionListener()
+        reference.addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
-            public void onPlaceSelected(Place place)
+            public void onDataChange(DataSnapshot dataSnapshot)
             {
-                placeName = place.getName().toString();
-                placeAddress = place.getAddress().toString();
-                coordinates = place.getLatLng();
-                searchBar.setText(placeName);
-            }
+                //Setto in base alla media delle tariffe
+                rateED.setText(dataSnapshot.getValue().toString());
 
-            @Override
-            public void onError(Status status) {}
-        });
-
-        searchFab = (FloatingActionButton) rootView.findViewById(R.id.searchFab);
-        searchFab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                if (validateForm())
+                //Avvaloro lo spinner
+                // Create an ArrayAdapter using the string array and a default spinner layout
+                ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(
+                        getContext(), R.array.ray_array, android.R.layout.simple_spinner_item);
+                //Specify the layout to use when the list of choices appears
+                adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                // Apply the adapter to the spinner
+                spinner.setAdapter(adapter1);
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
                 {
-                    Intent mapIntent = new Intent(getContext(), MapActivity.class);
-                    mapIntent.putExtra("coordinates", coordinates.toString());
-                    mapIntent.putExtra("time", timeED.getText().toString());
-                    mapIntent.putExtra("date", dateED.getText().toString());
-                    mapIntent.putExtra("payment", rateED.getText().toString());
-                    mapIntent.putExtra("ray", ray);
-                    if (noteED.getText().equals(""))
-                        mapIntent.putExtra("note", "N/D");
-                    else
-                        mapIntent.putExtra("note", noteED.getText().toString());
-                    mapIntent.putExtra("placeName", placeName.toString());
-                    mapIntent.putExtra("placeDetails", placeAddress).toString();
-                    startActivity(mapIntent);
-                }
+                    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
+                    {
+                        parent.getContext();
+                        ray = Integer.parseInt(parent.getItemAtPosition(pos).toString());
+                        // ray=parent.getItemAtPosition(pos).toString();
+                    }
+
+                    public void onNothingSelected(AdapterView<?> parent) {}
+                });
+
+                //Preparo la searchBar
+                searchBar = new SupportPlaceAutocompleteFragment();
+                getFragmentManager().beginTransaction().replace(R.id.serachAutocompleteContainer,
+                        searchBar).commit();
+
+                //Instanzio l'ascoltatore per la searchBar
+                searchBar.setOnPlaceSelectedListener(new PlaceSelectionListener()
+                {
+                    @Override
+                    public void onPlaceSelected(Place place)
+                    {
+                        placeName = place.getName().toString();
+                        placeAddress = place.getAddress().toString();
+                        coordinates = place.getLatLng();
+                        searchBar.setText(placeName);
+                    }
+
+                    @Override
+                    public void onError(Status status) {}
+                });
+
+                //Instanzio il bottone di ricerca
+                searchFab = (FloatingActionButton) rootView.findViewById(R.id.searchFab);
+                searchFab.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        if (validateForm())
+                        {
+                            Intent mapIntent = new Intent(getContext(), MapActivity.class);
+                            mapIntent.putExtra("coordinates", coordinates.toString());
+                            mapIntent.putExtra("time", timeED.getText().toString());
+                            mapIntent.putExtra("date", dateED.getText().toString());
+                            mapIntent.putExtra("payment", rateED.getText().toString());
+                            mapIntent.putExtra("ray", ray);
+                            if (noteED.getText().equals(""))
+                                mapIntent.putExtra("note", "N/D");
+                            else
+                                mapIntent.putExtra("note", noteED.getText().toString());
+                            mapIntent.putExtra("placeName", placeName.toString());
+                            mapIntent.putExtra("placeDetails", placeAddress).toString();
+                            startActivity(mapIntent);
+                        }
+                    }
+                });
             }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
         });
+
+
+
 
         return rootView;
     }
@@ -196,6 +233,10 @@ public class FragmentHome extends Fragment
         } );
 
         Log.d(TAG, "MyToken -> " + FirebaseInstanceId.getInstance().getToken());
+
+        //test update average_price TODO Test. Remove this shit!
+        RemoteDBAdapter adapter = new RemoteDBAdapter();
+        adapter.upgradeAveragePrices(2.5);
 
     }
 
@@ -256,5 +297,4 @@ public class FragmentHome extends Fragment
 
         return valid;
     }
-
 }

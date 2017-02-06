@@ -20,5 +20,9 @@ public class RemoteDatabaseString
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PHOTOURL = "photoUrl";
     public static final String KEY_USERNAME="userName";
+    public static final String KEY_AVERAGE_PRICES="average_prices";
+    public static final String KEY_AVERAGE="average";
+    public static final String KEY_N="n";
+    public static final String KEY_SUM="sum";
 
 }

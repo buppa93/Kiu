@@ -1,5 +1,6 @@
 package com.domain.my.giuseppe.kiu.remotedatabase;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.domain.my.giuseppe.kiu.kiuwer.Kiuwer;
@@ -21,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -60,6 +62,36 @@ public class RemoteDBAdapter
         DatabaseReference databaseReference = database.getReference()
                 .child(RemoteDatabaseString.KEY_USER_NODE).child(transformEmail(user.getUserName()));
         databaseReference.setValue(user);
+    }
+
+    public void upgradeAveragePrices(final double price)
+    {
+        final DatabaseReference reference = database.getReference()
+                .child(RemoteDatabaseString.KEY_AVERAGE_PRICES);
+
+        reference.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                HashMap<String,Object> data = (HashMap<String,Object>) dataSnapshot.getValue();
+
+                int n = Integer.parseInt(data.get(RemoteDatabaseString.KEY_N).toString());
+                double sum = Double.parseDouble(data.get(RemoteDatabaseString.KEY_SUM).toString());
+                n += 1;
+                sum += price;
+                double average = sum / n;
+
+                data.put(RemoteDatabaseString.KEY_N, String.valueOf(n));
+                data.put(RemoteDatabaseString.KEY_SUM, String.valueOf(sum));
+                data.put(RemoteDatabaseString.KEY_AVERAGE, String.valueOf(average));
+
+                reference.updateChildren(data);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
     }
 
 
