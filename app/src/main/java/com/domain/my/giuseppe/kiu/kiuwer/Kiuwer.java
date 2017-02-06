@@ -573,7 +573,8 @@ public class Kiuwer extends AppCompatActivity
     {
         Log.d(TAG,"Sto per cambiare token");
         RemoteDBAdapter remoteDBAdapter = new RemoteDBAdapter();
-        remoteDBAdapter.updateRegistrationToken(Kiuwer.currentUserIstance, newToken);
+        String username = User.getUserName(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        remoteDBAdapter.updateRegistrationToken(username, newToken);
     }
 
 

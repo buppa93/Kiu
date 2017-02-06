@@ -169,26 +169,35 @@ public class MapActivity extends AppCompatActivity implements
                                 // Query queries = mDatabaseRef.orderByChild(RemoteDatabaseString.KEY_USERNAME)
                                 // .equalTo(marker.getTitle());
                                 Log.d(TAG, "USERNAME DA MARKER" + marker.getTitle());
-                                mDatabaseRef.child("users").child(marker.getTitle()).child("registration_token").addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        String tok;
-                                        tok = (String) dataSnapshot.getValue();
-                                        Log.d(TAG,"TOKEN" + tok);
-                                        RequestService request = new RequestService(2,
-                                                (String) data.get(DATE), (String) data.get(TIME),
-                                                (String) data.get(PLACENAME), (String) data.get(PLACEDETAILS),
-                                                (String) data.get(NOTE), tok,
-                                                Double.parseDouble(data.get(RATE).toString()),
-                                                Double.parseDouble(data.get(LATITUDE).toString()),
-                                                Double.parseDouble(data.get(LONGITUDE).toString()),
-                                                FirebaseInstanceId.getInstance().getToken(),0);
-                                        request.execute();
-                                    }
+                                mDatabaseRef.child("users").child(marker.getTitle())
+                                        .child("registration_token")
+                                        .addListenerForSingleValueEvent(new ValueEventListener()
+                                        {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot)
+                                            {
+                                                String tok;
+                                                tok = (String) dataSnapshot.getValue();
+                                                Log.d(TAG,"TOKEN" + tok);
+                                                RequestService request = new RequestService(2,
+                                                        (String) data.get(DATE),
+                                                        (String) data.get(TIME),
+                                                        (String) data.get(PLACENAME),
+                                                        (String) data.get(PLACEDETAILS),
+                                                        (String) data.get(NOTE), tok,
+                                                        Double.parseDouble(data.get(RATE)
+                                                                .toString()),
+                                                        Double.parseDouble(data.get(LATITUDE)
+                                                                .toString()),
+                                                        Double.parseDouble(data.get(LONGITUDE)
+                                                                .toString()),
+                                                        FirebaseInstanceId.getInstance().getToken(),
+                                                            0);
+                                                request.execute();
+                                            }
 
                                     @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-                                    }
+                                    public void onCancelled(DatabaseError databaseError) {}
                                 });
                             }
                         })

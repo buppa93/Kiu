@@ -5,6 +5,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.domain.my.giuseppe.kiu.kiuwer.Kiuwer;
+import com.domain.my.giuseppe.kiu.model.User;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDBAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,6 +42,9 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService
     private void sendRegistrationToServer(String newToken)
     {
         RemoteDBAdapter remoteDBAdapter = new RemoteDBAdapter();
-        remoteDBAdapter.updateRegistrationToken(Kiuwer.currentUserIstance, newToken);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        String username = User.getUserName(user.getEmail());
+        remoteDBAdapter.updateRegistrationToken(username, newToken);
     }
 }

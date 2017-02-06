@@ -94,64 +94,18 @@ public class RemoteDBAdapter
         });
     }
 
-
-    /**
-     * Get a User by its userName
-     * @param userName username of the user (email without domain and , instead of .)
-     * @return an istance of User class
-     */
-    public User getUser(final String userName)
-    {
-        Log.d(TAG, "Sono in getUser()");
-        final User user = new User();
-
-        DatabaseReference databaseReference = database.getReference()
-                .child(RemoteDatabaseString.KEY_USER_NODE).child(userName);
-
-        databaseReference.addValueEventListener(new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                HashMap<?,?> userMap = (HashMap<?,?>) dataSnapshot.getValue();
-
-                ArrayList<HashMap<String,String>> feedbacksMap =
-                        (ArrayList<HashMap<String,String>>) userMap
-                                .get(RemoteDatabaseString.KEY_FEEDBACK_NODE);
-                ArrayList<Feedback> feedbacksList = getFeedbacks(feedbacksMap);
-
-                user.setFeedback(feedbacksList);
-                user.setEmail(userMap.get(RemoteDatabaseString.KEY_EMAIL).toString());
-                user.setLat(Double.parseDouble(userMap.get(RemoteDatabaseString.KEY_LATITUDE)
-                        .toString()));
-                user.setLng(Double.parseDouble(userMap.get(RemoteDatabaseString.KEY_LONGITUDE)
-                        .toString()));
-                user.setAvailability(userMap.get(RemoteDatabaseString.KEY_AVAILABILITY).toString());
-                user.setRegistration_token(userMap.get(RemoteDatabaseString.KEY_REGISTRATION_NODE)
-                        .toString());
-                user.setPhotoUrl(userMap.get(RemoteDatabaseString.KEY_PHOTOURL).toString());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
-
-        return user;
-    }
-
     /**
      * aggiorna il nuovo token sul database al nodo utente
      * @param user utente loggato
      * @param newToken nuovo token da inserire
      */
-    public void updateRegistrationToken(User user, String newToken)
+    public void updateRegistrationToken(String user, String newToken)
     {
         Log.d(TAG, "Sono in updateRegistrationToken()");
-
         DatabaseReference databaseReference = database.getReference()
                 .child(RemoteDatabaseString.KEY_USER_NODE);
         DatabaseReference mdatabaseReference = databaseReference
-                .child(user.getUserName(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
+                .child(user)
                 .child(RemoteDatabaseString.KEY_REGISTRATION_NODE);
         //  user.setRegistration_token(newToken);
         mdatabaseReference.setValue(newToken);
