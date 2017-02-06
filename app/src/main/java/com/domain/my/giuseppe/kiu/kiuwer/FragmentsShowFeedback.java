@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.ArraySet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +15,9 @@ import android.widget.TextView;
 import com.domain.my.giuseppe.kiu.R;
 import com.domain.my.giuseppe.kiu.model.Feedback;
 import com.domain.my.giuseppe.kiu.model.User;
-import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDBAdapter;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDatabaseString;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.api.model.StringList;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,10 +26,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Vector;
 
 public class FragmentsShowFeedback extends Fragment implements ValueEventListener
 {
@@ -76,24 +69,6 @@ public class FragmentsShowFeedback extends Fragment implements ValueEventListene
                 .child(RemoteDatabaseString.KEY_USER_NODE).child(userName)
                 .child(RemoteDatabaseString.KEY_FEEDBACK_NODE);
         databaseReference.addListenerForSingleValueEvent(this);
-
-        /*if (!arePresent) {makeAlertDialog();}
-        else
-        {
-            textFeedback.setText(String.valueOf(feedbacks.size()));
-            numRate.setText(String.valueOf(getAvarage(feedbacks)));
-
-            int[] starts = countNumberOfStart(feedbacks);
-            top.setText(String.valueOf(starts[4]));
-            good.setText(String.valueOf(starts[3]));
-            decent.setText(String.valueOf(starts[2]));
-            disappointing.setText(String.valueOf(starts[1]));
-            bad.setText(String.valueOf(starts[0]));
-
-            FeedbacksAdapter adapter = new FeedbacksAdapter(getContext(),feedbacks);
-            myFeedbackList.setAdapter(adapter);
-        }*/
-
 
         return rootView;
     }

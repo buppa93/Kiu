@@ -18,7 +18,6 @@ import com.domain.my.giuseppe.kiu.R;
 import com.domain.my.giuseppe.kiu.kiuwer.Kiuwer;
 import com.domain.my.giuseppe.kiu.model.User;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDBAdapter;
-import com.domain.my.giuseppe.kiu.signin.UserLoggingDetails;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;

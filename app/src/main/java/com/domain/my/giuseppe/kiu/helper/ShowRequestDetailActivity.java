@@ -17,10 +17,8 @@ import android.widget.TextView;
 
 import com.domain.my.giuseppe.kiu.R;
 import com.domain.my.giuseppe.kiu.model.User;
-import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDBAdapter;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDatabaseString;
 import com.domain.my.giuseppe.kiu.service.RequestChaffer;
-import com.domain.my.giuseppe.kiu.utils.SingletonObject;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -42,8 +40,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
-import static com.domain.my.giuseppe.kiu.R.id.helpers;
 
 public class ShowRequestDetailActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final String TAG = "SRDA";

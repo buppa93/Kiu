@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.storage.StorageManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import com.domain.my.giuseppe.kiu.R;
-import com.domain.my.giuseppe.kiu.model.User;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDBAdapter;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDatabaseString;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -42,8 +40,6 @@ public class AddRateDbAdapter extends CursorAdapter implements ValueEventListene
     String email;
     RemoteDBAdapter remoteDBAdapter;
     de.hdodenhof.circleimageview.CircleImageView imageView;
-    public static User currentUserIstance;
-
     Bitmap bmp;
     public AddRateDbAdapter(Context context, Cursor cursor) {
         super(context, cursor, 0);
@@ -60,9 +56,7 @@ public class AddRateDbAdapter extends CursorAdapter implements ValueEventListene
     // such as setting the text on a TextView.
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
-        currentUserIstance = new User();
         remoteDBAdapter = new RemoteDBAdapter();
-        remoteDBAdapter.getDb();
         // Find fields to populate in inflated template
         namefield=(TextView) view.findViewById(R.id.namefieldaddrate);
         filapresso=(TextView) view.findViewById(R.id.textView10);

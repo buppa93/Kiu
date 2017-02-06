@@ -20,9 +20,7 @@ import com.domain.my.giuseppe.kiu.R;
 import com.domain.my.giuseppe.kiu.kiuwer.Kiuwer;
 import com.domain.my.giuseppe.kiu.model.User;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDBAdapter;
-import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDatabaseString;
 import com.domain.my.giuseppe.kiu.service.MyFirebaseInstanceIDService;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -263,10 +261,7 @@ public class StartActivity extends AppCompatActivity
         {
             Log.d(TAG, "doInBackground()");
             remoteDBAdapter = new RemoteDBAdapter();
-            user = new User(UserLoggingDetails.getIstance().getEmail(), UserLoggingDetails
-                    .getIstance().getUid(), RemoteDatabaseString.KEY_AVAILABILITY_YES,
-                    UserLoggingDetails.getIstance().getPhotoUri().toString());
-            remoteDBAdapter.writeUser(user);
+            remoteDBAdapter.writeUser();
             return true;
         }
 

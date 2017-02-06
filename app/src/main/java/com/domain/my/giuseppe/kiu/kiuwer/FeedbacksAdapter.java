@@ -46,15 +46,4 @@ public class FeedbacksAdapter extends ArrayAdapter<Feedback>
 
         return convertView;
     }
-
-    /*@Override
-    public void bindView(View view, Context context, Cursor cursor)
-    {
-        commentView = (TextView) view.findViewById(R.id.comment);
-        ratingView = (RatingBar) view.findViewById(R.id.ratingBarView);
-
-        float rateFloat = Float.parseFloat(cursor.getString(2)); //rating
-        commentView.setText(cursor.getString(1)); //comment
-        ratingView.setRating(rateFloat);
-    }*/
 }

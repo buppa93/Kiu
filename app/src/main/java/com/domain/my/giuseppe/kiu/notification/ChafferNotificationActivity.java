@@ -1,7 +1,7 @@
 package com.domain.my.giuseppe.kiu.notification;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.domain.my.giuseppe.kiu.R;
 

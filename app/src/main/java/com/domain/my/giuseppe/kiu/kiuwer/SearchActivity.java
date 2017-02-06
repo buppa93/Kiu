@@ -32,7 +32,6 @@ import java.util.StringTokenizer;
 public class SearchActivity extends AppCompatActivity
 {
     public String TAG = "MY APPLICATION";
-    PlaceAutocompleteFragment autocompleteFragment;
 
     private static final String DATE="Date";
     private static final String TIME="Time";
@@ -90,8 +89,6 @@ public class SearchActivity extends AppCompatActivity
                 intent.putExtra("Latitude",latLng.latitude);
                 intent.putExtra("Longitude",latLng.longitude);
 
-                Log.d(TAG, "Vediamo se sto cazzo di user qui funziona! " + Kiuwer.currentUserIstance
-                        .toString());
                 startActivity(intent);
             }
 

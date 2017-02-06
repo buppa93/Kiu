@@ -4,8 +4,6 @@ import android.os.AsyncTask;
 
 import com.domain.my.giuseppe.kiu.utils.HttpRequestManager;
 
-import java.util.ArrayList;
-
 /**
  * Created by ivasco92 on 05/11/16.
  */

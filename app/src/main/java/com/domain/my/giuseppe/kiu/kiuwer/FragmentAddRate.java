@@ -16,8 +16,6 @@ import android.widget.ListView;
 import com.domain.my.giuseppe.kiu.R;
 import com.domain.my.giuseppe.kiu.localdatabase.DatabaseListHelperAdapter;
 
-import java.nio.ByteBuffer;
-
 //import com.domain.my.giuseppe.kiu.utils.Helpers;
 
 
@@ -40,22 +38,6 @@ public class FragmentAddRate extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_addrate, container, false);
         addrate= (ListView) rootView.findViewById(R.id.listaddrate);
         final DatabaseListHelperAdapter db= new DatabaseListHelperAdapter(getContext());
-       /* db.open();
-        cursor=db.fetchAllContacts();
-        adapter= new AddRateDbAdapter(getContext(), cursor);
-        addrate.setAdapter(adapter);
-
-        addrate.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                Intent intent=new Intent(getActivity(),RateActivity.class);
-                intent.putExtra(NAME,cursor.getString(1));
-                startActivity(intent);
-                db.close();
-            }
-        });*/
 
         // display the progressbar on the screen
         handler=new Handler();

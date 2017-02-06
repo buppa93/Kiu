@@ -1,22 +1,13 @@
 package com.domain.my.giuseppe.kiu.kiuwer;
 
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
-import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
-//import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -25,18 +16,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.lang.Math;
 
-import com.domain.my.giuseppe.kiu.Manifest;
 import com.domain.my.giuseppe.kiu.R;
 import com.domain.my.giuseppe.kiu.localdatabase.DatabaseListHelperAdapter;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDatabaseString;
 import com.domain.my.giuseppe.kiu.service.RequestService;
-import com.domain.my.giuseppe.kiu.utils.ResearchOpt;
-import com.google.android.gms.appdatasearch.GetRecentContextCall;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -63,9 +48,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import static java.lang.Math.acos;
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
+//import android.location.LocationListener;
 
 public class MapActivity extends AppCompatActivity implements
         OnMapReadyCallback
@@ -192,7 +175,7 @@ public class MapActivity extends AppCompatActivity implements
                                                         Double.parseDouble(data.get(LONGITUDE)
                                                                 .toString()),
                                                         FirebaseInstanceId.getInstance().getToken(),
-                                                            0);
+                                                        0);
                                                 request.execute();
                                             }
 

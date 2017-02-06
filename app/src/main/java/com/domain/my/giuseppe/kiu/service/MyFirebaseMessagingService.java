@@ -16,8 +16,6 @@ import com.domain.my.giuseppe.kiu.utils.NotificationData;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import java.io.Serializable;
-
 public class MyFirebaseMessagingService extends FirebaseMessagingService
 {
     private static final int CUSTOM_ACTION_NOTIFICATION = 9567;

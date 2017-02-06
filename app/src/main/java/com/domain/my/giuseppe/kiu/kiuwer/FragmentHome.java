@@ -1,15 +1,11 @@
 //package universit.ivasco92.kiu;
 package com.domain.my.giuseppe.kiu.kiuwer;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -18,25 +14,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
 import com.domain.my.giuseppe.kiu.R;
-import com.domain.my.giuseppe.kiu.localdatabase.DatabaseAdapter;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDBAdapter;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDatabaseString;
 import com.domain.my.giuseppe.kiu.signin.SignInActivity;
 import com.domain.my.giuseppe.kiu.utils.DatePickerFragment;
-import com.domain.my.giuseppe.kiu.utils.PlaceView;
-import com.domain.my.giuseppe.kiu.utils.ResearchOpt;
-import com.domain.my.giuseppe.kiu.utils.SingletonObject;
 import com.domain.my.giuseppe.kiu.utils.TimePickerFragment;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -47,10 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.StringTokenizer;
 
 public class FragmentHome extends Fragment
 {
@@ -58,7 +43,6 @@ public class FragmentHome extends Fragment
     EditText timeED;
     EditText rateED;
     EditText noteED;
-    //ListView listView;
     View rootView;
     public int ray = 0;
     Spinner spinner;
@@ -69,13 +53,6 @@ public class FragmentHome extends Fragment
     String placeName;
     String placeAddress;
     LatLng coordinates;
-
-    String averagePrices;
-
-    private static final String DATE="Date";
-    private static final String TIME="Time";
-    private static final String NOTE="";
-    private static final String LATLNG="LatLng";
 
     public static final String TAG = "Fragment Home";
 

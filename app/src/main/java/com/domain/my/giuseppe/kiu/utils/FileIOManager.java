@@ -3,9 +3,7 @@ package com.domain.my.giuseppe.kiu.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Environment;
-import android.os.storage.StorageManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 

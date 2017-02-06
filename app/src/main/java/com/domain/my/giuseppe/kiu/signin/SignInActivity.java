@@ -2,21 +2,16 @@ package com.domain.my.giuseppe.kiu.signin;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -25,23 +20,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-
-
 import com.domain.my.giuseppe.kiu.R;
 import com.domain.my.giuseppe.kiu.kiuwer.Kiuwer;
-import com.domain.my.giuseppe.kiu.model.User;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDBAdapter;
-import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDatabaseString;
 import com.domain.my.giuseppe.kiu.utils.FileIOManager;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -451,24 +438,13 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         ArrayList<Double> coord = getCoord();
         RemoteDBAdapter remoteDBAdapter = new RemoteDBAdapter();
         Log.d(TAG, "Sign in reg tok: " + FirebaseInstanceId.getInstance().getToken());
-        User u = new User(email, FirebaseInstanceId.getInstance()
-                .getToken(), RemoteDatabaseString.KEY_AVAILABILITY_YES, "http://test.domain.net");
-        remoteDBAdapter.writeUser(u);
+        remoteDBAdapter.writeUser();
 
     }
 
     //TODO complete this function
     private ArrayList<Double> getCoord() {
         return new ArrayList<>();
-    }
-
-    /**
-     * Set up current user attribute
-     */
-    private void setUpCurrentUser() {
-        Kiuwer.currentUserIstance.setEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-        Kiuwer.currentUserIstance.setRegistration_token(FirebaseInstanceId.getInstance().getToken());
-        Kiuwer.currentUserIstance.setProfilePhoto(img);
     }
 
     /**

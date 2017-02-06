@@ -10,7 +10,6 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -30,24 +29,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.domain.my.giuseppe.kiu.R;
 import com.domain.my.giuseppe.kiu.helper.FragmentHomeHelper;
 import com.domain.my.giuseppe.kiu.helper.FragmentYourKiuwer;
-import com.domain.my.giuseppe.kiu.helper.SettingsActivity;
 import com.domain.my.giuseppe.kiu.localdatabase.DatabaseListKiuer;
 import com.domain.my.giuseppe.kiu.model.Feedback;
 import com.domain.my.giuseppe.kiu.model.User;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDBAdapter;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDatabaseString;
 import com.domain.my.giuseppe.kiu.service.LatLngService;
-import com.domain.my.giuseppe.kiu.service.MyFirebaseInstanceIDService;
 import com.domain.my.giuseppe.kiu.signin.StartActivity;
-import com.domain.my.giuseppe.kiu.signin.UserLoggingDetails;
-import com.domain.my.giuseppe.kiu.utils.FileIOManager;
 import com.domain.my.giuseppe.kiu.utils.PasswordDialogFragment;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,8 +53,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -69,11 +60,6 @@ public class Kiuwer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
 {
     public static final String TAG = "KiuwerActivity";
-    private static final int CLOSE_CODE = 1;
-    public static User currentUserIstance;
-
-    Bitmap bitmap;
-    de.hdodenhof.circleimageview.CircleImageView firstProfile;
     Menu nav_menu;
 
     public TextView request;
@@ -81,14 +67,10 @@ public class Kiuwer extends AppCompatActivity
     DrawerLayout drawer;
     boolean cameFromNotification;
 
-    View headerLayout;
-
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-
-        /*checkUserSignedUp();*/
 
         RemoteDBAdapter remoteDBAdapter = new RemoteDBAdapter();
 
@@ -100,17 +82,6 @@ public class Kiuwer extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         request=(TextView) MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.nav_your_kiuwer));
         initializeCountDrawer();
-        /*if(user != null){
-            final Intent LatLngServiceIntent = new Intent(getApplicationContext(), LatLngService.class);
-            final Intent regTokenIntent = new Intent(getApplicationContext(),
-                    MyFirebaseInstanceIDService.class);
-            startService(LatLngServiceIntent);
-            startService(regTokenIntent);
-        }
-        else{
-            Intent start = new Intent(getApplicationContext(), StartActivity.class);
-            startActivity(start);
-        }*/
 
         if(user != null)
         {
@@ -158,8 +129,6 @@ public class Kiuwer extends AppCompatActivity
             ft.commit();
 
             new GetProfileImg().execute();
-            Log.d(TAG, "Debug helpers research");
-            remoteDBAdapter.searchHelpers(new LatLng(0,0), 0);
 
             Log.d(TAG,"RICEVO INTENT");
             if (getIntent().getExtras() != null) {
@@ -267,12 +236,7 @@ public class Kiuwer extends AppCompatActivity
             bitmap = BitmapFactory.decodeByteArray(this.imgBuffer, 0, this.imgBuffer.length);
             navigationView = (NavigationView) findViewById(R.id.nav_view);
             headerLayout = navigationView.getHeaderView(0);
-           /* kiuwerName = (TextView) headerLayout.findViewById(R.id.kiuwername);
-            kiuwerMail = (TextView) headerLayout.findViewById(R.id.kiuwermail);
 
-            kiuwerName.setText(User.getUserName(user.getEmail()));
-            kiuwerMail.setText(user.getEmail());
-*/
             firstProfile = (de.hdodenhof.circleimageview.CircleImageView) headerLayout
                     .findViewById(R.id.firstprofile);
             firstProfile.setImageBitmap(bitmap);
@@ -507,23 +471,6 @@ public class Kiuwer extends AppCompatActivity
 
     }
 
-    private void checkUserSignedUp()
-    {
-        FirebaseAuth auth;
-        auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
-        if(user == null)
-        {
-            Intent intent = new Intent(this, StartActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        else
-        {
-            Log.d(TAG, "Current User -> " + user.getEmail());
-        }
-    }
-
     private void initializeCountDrawer() {
         //Gravity property aligns the text
         request.setGravity(Gravity.CENTER_VERTICAL);
@@ -538,31 +485,6 @@ public class Kiuwer extends AppCompatActivity
         if(c.getString(0).equals("0"))
             request.setVisibility(View.INVISIBLE);
         else request.setVisibility(View.VISIBLE);
-    }
-
-
-    private class LoadImage extends AsyncTask<String, String, Bitmap>
-    {
-        @Override
-        protected void onPreExecute() {super.onPreExecute();}
-
-        protected Bitmap doInBackground(String... args)
-        {
-            try {bitmap = BitmapFactory.decodeStream((InputStream)new URL(args[0]).getContent());}
-            catch (Exception e) {e.printStackTrace();}
-            return bitmap;
-        }
-
-        protected void onPostExecute(Bitmap image)
-        {
-            if(image != null) {firstProfile.setImageBitmap(image);}
-            else
-            {
-                Toast.makeText(Kiuwer.this, "Image Does Not exist or Network Error",
-                        Toast.LENGTH_SHORT).show();
-
-            }
-        }
     }
 
     /**
