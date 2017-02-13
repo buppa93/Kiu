@@ -14,7 +14,8 @@ import android.widget.ListView;
 
 import com.domain.my.giuseppe.kiu.R;
 import com.domain.my.giuseppe.kiu.localdatabase.DatabaseListHelperAdapter;
-
+import com.domain.my.giuseppe.kiu.model.User;
+import com.google.firebase.auth.FirebaseAuth;
 //import com.domain.my.giuseppe.kiu.utils.Helpers;
 
 public class FragmentYourHelpers extends Fragment
@@ -30,37 +31,31 @@ public class FragmentYourHelpers extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_yourhelpers, container, false);
         listView = (ListView) rootView.findViewById(R.id.listhelpers);
         final DatabaseListHelperAdapter db = new DatabaseListHelperAdapter(getActivity());
 
         handler=new Handler();
+
+        //mostro il progress dialog
         progressDialog = new ProgressDialog(FragmentYourHelpers.this.getActivity());
         progressDialog.setMessage("loading...");
         progressDialog.show();
 
-        // start the time consuming task in a new thread
         Thread thread = new Thread() {
 
             public void run() {
-
-                // Now we are on a different thread than UI thread
-                // and we would like to update our UI, as this task is completed
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-
-                        // Update your UI or do any Post job after the time consuming task
-                        //  updateUI();
-
+                        //recupero i dati degli helper dal database locale
                         db.open();
-                        cursor = db.fetchAllContacts();
+                        cursor = db.fetchContactsByUsernameProfile(User.getUserName(FirebaseAuth.getInstance().getCurrentUser().getEmail()));
                         adapter = new YourHelpersDbAdapter(getActivity(), cursor);
                         listView.setAdapter(adapter);
 
                         db.close();
-                        // remember to dismiss the progress dialog on UI thread
+                        // fermo il progress dialog
                         progressDialog.dismiss();
 
                     }

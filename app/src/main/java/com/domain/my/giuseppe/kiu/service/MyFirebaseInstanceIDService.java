@@ -11,35 +11,37 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
-public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService
-{
+public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     private static final String TAG = "MyFirebaseIDService";
 
     @Override
-    public void onTokenRefresh()
-    {
+    public void onTokenRefresh() {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Log.d(TAG,"Refreshed token: " + refreshedToken);
+        Log.d(TAG, "Refreshed token: " + refreshedToken);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         //sendRegistrationToServer(refreshedToken);
-        //Kiuwer.currentUserIstance.setRegistration_token(refreshedToken);
+        //MainActivity.currentUserIstance.setRegistration_token(refreshedToken);
 
-        //Salvo il nuovo token nelle preferences per settarlo sul database in kiuer.class dopo il login
+        //Salvo il nuovo token nelle preferences per settarlo sul database remoto in mainactivity dopo il login
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("registration_id", refreshedToken);
         editor.apply();
 
         //TODO da testare
-        if(user!=null){
+        if (user != null) {
             sendRegistrationToServer(refreshedToken);
         }
-//        Kiuwer.currentUserIstance.setRegistration_token(refreshedToken);
+//        MainActivity.currentUserIstance.setRegistration_token(refreshedToken);
     }
 
-    private void sendRegistrationToServer(String newToken)
-    {
+    /**
+     * manda il nuovo token al database
+     *
+     * @param newToken nuovo tken da inviare al database
+     */
+    private void sendRegistrationToServer(String newToken) {
         RemoteDBAdapter remoteDBAdapter = new RemoteDBAdapter();
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();

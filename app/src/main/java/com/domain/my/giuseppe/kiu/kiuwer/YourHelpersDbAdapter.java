@@ -57,8 +57,12 @@ public class YourHelpersDbAdapter extends CursorAdapter
         return LayoutInflater.from(context).inflate(R.layout.item_helper, parent, false);
     }
 
-    // The bindView method is used to bind all data to a given view
-    // such as setting the text on a TextView.
+    /**
+     * è usato per legare tutti i dati ad una data view
+     * @param view
+     * @param context
+     * @param cursor
+     */
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
         namefield = (TextView) view.findViewById(R.id.nametext);
@@ -74,16 +78,14 @@ public class YourHelpersDbAdapter extends CursorAdapter
         datatext= (TextView)view.findViewById(R.id.textView2);
         pay= (Button)view.findViewById(R.id.paybutton);
 
-        //TextView tvBody = (TextView) view.findViewById(R.id.tvBody);
-        //TextView tvPriority = (TextView) view.findViewById(R.id.tvPriority);
-        // Extract properties from cursor
-        name= cursor.getString(cursor.getColumnIndex(cursor.getColumnName(1))); //"username"
-        address= cursor.getString(cursor.getColumnIndex(cursor.getColumnName(3)));//"address"
-        date=cursor.getString(cursor.getColumnIndex(cursor.getColumnName(2)));//"date"
-        time=cursor.getString(cursor.getColumnIndex(cursor.getColumnName(4)));//"time"
-        money=cursor.getString(cursor.getColumnIndex(cursor.getColumnName(5)));//"money"
+        // Setta le stringhe con i dati presi dal database locale tramite il cursor
+        name= cursor.getString(cursor.getColumnIndex(cursor.getColumnName(2))); //"username"
+        address= cursor.getString(cursor.getColumnIndex(cursor.getColumnName(4)));//"address"
+        date=cursor.getString(cursor.getColumnIndex(cursor.getColumnName(3)));//"date"
+        time=cursor.getString(cursor.getColumnIndex(cursor.getColumnName(5)));//"time"
+        money=cursor.getString(cursor.getColumnIndex(cursor.getColumnName(6)));//"money"
 
-        // Populate fields with extracted properties
+        // popola i campi con le stringhe
         namefield.setText(name);
         via.setText(address);
         data.setText(date);
@@ -102,8 +104,6 @@ public class YourHelpersDbAdapter extends CursorAdapter
                 context.startActivity(gotopay);
             }
         });
-        // tvBody.setText(body);
-        //tvPriority.setText(String.valueOf(priority));
     }
 
     private void getMailbyname (String name, final View v){

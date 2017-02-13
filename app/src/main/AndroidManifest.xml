@@ -63,7 +63,7 @@
         <!-- END -->
 
         <activity
-            android:name=".kiuwer.Kiuwer"
+            android:name=".kiuwer.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden">
@@ -75,7 +75,7 @@
         <activity
             android:name=".kiuwer.SearchActivity"
             android:label="Search Activity"
-            android:parentActivityName=".kiuwer.Kiuwer">
+            android:parentActivityName=".kiuwer.MainActivity">
         </activity>
 
         <!-- PAOLO -->
@@ -97,7 +97,6 @@
 
 
         <!-- DONATO -->
-        <activity android:name=".helper.RateActivity" />
         <activity android:name=".helper.SettingsActivity" />
         <!-- DONATO -->
 
@@ -105,12 +104,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCt5TSdIxCtLf75asQlwtbkj9lhcIhPmUc" />
 
-        <activity android:name=".helper.ShowRequestDetailActivity" />
+        <activity android:name=".notification.ShowRequestDetailActivity" />
 
-        <service
-            android:name=".service.UploadService"
-            android:enabled="true"
-            android:exported="true"></service><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.gms.version"

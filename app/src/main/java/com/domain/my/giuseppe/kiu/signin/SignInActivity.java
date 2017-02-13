@@ -21,7 +21,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.domain.my.giuseppe.kiu.R;
-import com.domain.my.giuseppe.kiu.kiuwer.Kiuwer;
+import com.domain.my.giuseppe.kiu.kiuwer.MainActivity;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDBAdapter;
 import com.domain.my.giuseppe.kiu.utils.FileIOManager;
 import com.google.android.gms.appindexing.Action;
@@ -81,17 +81,13 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     Location mLocation;
 
     private FirebaseAuth mAuth;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
     private GoogleApiClient client;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sign_in);
 
 
@@ -99,7 +95,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         //actionBar.setHomeButtonEnabled(true);
         //actionBar.setDisplayHomeAsUpEnabled(true);
         //actionBar.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
 
 
         Log.d(TAG, "Sono in onCreate()");
@@ -182,43 +177,33 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         if (!validateForm()) {
             return;
         }
-
         showProgressDialog();
-
         Log.d(TAG, "Credential: " + email + ", " + password);
-
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "createUserWithEmail:onComplete: " + task.isSuccessful());
-
                         if (!task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), R.string.auth_failed,
                                     Toast.LENGTH_LONG).show();
                         }
-
                         /*Log.d(TAG, "User details: " + mAuth.getCurrentUser().getEmail() + ", " +
                                 mAuth.getCurrentUser().getDisplayName() + ", " +
                                 mAuth.getCurrentUser().getPhotoUrl());
 */
                         storeUserInDb(email);
-
                         if (img != null) {
                             storeProfileImg(img);
                         }
 
                         signIn(email, password);
-
                         hideProgressDialog();
-
                         //setUpCurrentUser();
-
                         jumpToKiuwerActivity();
 
                     }
                 });
-
     }
 
     /**
@@ -451,7 +436,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
      * Jump to the kiuwer Activity
      */
     private void jumpToKiuwerActivity() {
-        Intent intent = new Intent(this, Kiuwer.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.domain.my.giuseppe.kiu.R;
-import com.domain.my.giuseppe.kiu.kiuwer.Kiuwer;
+import com.domain.my.giuseppe.kiu.kiuwer.MainActivity;
 import com.domain.my.giuseppe.kiu.model.User;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDBAdapter;
 import com.domain.my.giuseppe.kiu.service.MyFirebaseInstanceIDService;
@@ -241,7 +241,7 @@ public class StartActivity extends AppCompatActivity
 
     public void jumpToMainActivity()
     {
-        Intent intent = new Intent(getApplicationContext(), Kiuwer.class);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivityForResult(intent, 0);
     }
 

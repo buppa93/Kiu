@@ -11,45 +11,64 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.domain.my.giuseppe.kiu.R;
-import com.domain.my.giuseppe.kiu.helper.ShowRequestDetailActivity;
-import com.domain.my.giuseppe.kiu.utils.NotificationData;
+import com.domain.my.giuseppe.kiu.notification.ShowRequestDetailActivity;
+import com.domain.my.giuseppe.kiu.localdatabase.DatabaseListHelperAdapter;
+import com.domain.my.giuseppe.kiu.localdatabase.DatabaseListKiuer;
+import com.domain.my.giuseppe.kiu.model.User;
+import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDatabaseString;
+import com.domain.my.giuseppe.kiu.model.NotificationData;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-public class MyFirebaseMessagingService extends FirebaseMessagingService
-{
+import java.util.HashMap;
+import java.util.Set;
+
+public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final int CUSTOM_ACTION_NOTIFICATION = 9567;
-    private static final String PROVA="prova messaggio";
-    private static final String LOCALDATA="localdata";
-    private static final String ID="id";
-    private static final String LOCALTIME="localtime";
-    private static final String PLACENAME="placename";
-    private static final String PLACEADDRESS="placeaddress";
-    private static final String NOTE="note";
-    private static final String PRICE="price";
-    private static final String LATITUDE="latitude";
-    private static final String LONGITUDE="longitude";
-    private static final String FROM ="from";
-    private static final String TO ="to";
-    private static final String BUYER_NAME ="buyer_name";
-    private static final String SELLER_NAME ="seller_name";
-    private static final String KIUERTOKEN ="kiuertoken";
+    private static final String TAG = "MyFirebaseMS";
+    private static final String PROVA = "prova messaggio";
+    private static final String LOCALDATA = "localdata";
+    private static final String ID = "id";
+    private static final String LOCALTIME = "localtime";
+    private static final String PLACENAME = "placename";
+    private static final String PLACEADDRESS = "placeaddress";
+    private static final String NOTE = "note";
+    private static final String PRICE = "price";
+    private static final String LATITUDE = "latitude";
+    private static final String LONGITUDE = "longitude";
+    private static final String FROM = "from";
+    private static final String TO = "to";
+    private static final String BUYER_NAME = "buyer_name";
+    private static final String SELLER_NAME = "seller_name";
+    private static final String KIUERTOKEN = "kiuertoken";
     private static final String ACCEPTED = "accepted";
     private static final String BODY = "body";
     private static final String TITLE = "title";
     private static final String SOUND = "sound";
-
+    private DatabaseListHelperAdapter dbHelper;
+    private long cursor;
+    FirebaseDatabase database;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+    private static DatabaseListKiuer databaseListKiuer;
 
 
     @Override
-    public void onMessageReceived(RemoteMessage message)
-    {
+    public void onMessageReceived(RemoteMessage message) {
         NotificationChaffer notificationChaffer = new NotificationChaffer();
-        NotificationRequest notificationRequest = new NotificationRequest();
+        final NotificationRequest notificationRequest = new NotificationRequest();
         int id = Integer.parseInt(message.getData().get(ID));
 
         //se l'id =3 la notifica è una notifica di richiesta negoziazione,  se l'id è 2 è una normale richiesta di fila
-        if(id==3){
+        if (id == 3) {
             notificationChaffer.setFROM(message.getData().get("from"));
             notificationChaffer.setBUYER_NAME(message.getData().get("buyer_name"));
             notificationChaffer.setPRICE(message.getData().get("price"));
@@ -67,7 +86,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
 
             //TODO da creare sendNotificationChaffer
 
-        }else{
+        } else {
             notificationRequest.setId(message.getData().get("id"));
             notificationRequest.setLocalData(message.getData().get("localData"));
             notificationRequest.setLocalTime(message.getData().get("localTime"));
@@ -86,7 +105,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
             notificationRequest.setTitle(message.getData().get("title"));
             notificationRequest.setSound(message.getData().get("sound"));
 
-            Log.d(PROVA,notificationRequest.toString());
+            Log.d(PROVA, notificationRequest.toString());
        /* String icon = message.getNotification().getIcon();
         String title = message.getNotification().getTitle();
         String text = message.getNotification().getBody();
@@ -101,19 +120,80 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
 
 */
             // String from=message.getFrom();
+            databaseListKiuer = new DatabaseListKiuer(getApplication());
+            databaseListKiuer.open();
+            databaseListKiuer.createContentValuesNoId(
+                    notificationRequest.getKiuwerToken(),  //token
+                    "5",                                   //feedback
+                    notificationRequest.getPlaceName(),    //local_place
+                    notificationRequest.getPlaceAddress(),    //local_address
+                    notificationRequest.getLocalData(),    //local_data
+                    notificationRequest.getLocalTime(),    //local_time
+                    notificationRequest.getPrice(),        //price
+                    notificationRequest.getNote(),    //note
+                    notificationRequest.getLatitude(),     //latitude
+                    notificationRequest.getLongitude(),   //longitude
+                    0,  //visibility
+                    0
+            );
+            databaseListKiuer.close();
 
-            sendNotificationRequest(notificationRequest);
 
+            if (notificationRequest.getAccepted() == 1) {  //l'utente ha accettato la richiesta di fila
 
+                //mi ricavo il nome dell'utente tramite token
+                database = FirebaseDatabase.getInstance();
+                DatabaseReference dbRef = database.getReference().child(RemoteDatabaseString.KEY_USER_NODE)
+                        .getRef();
+
+                Query query = dbRef.orderByChild(RemoteDatabaseString.KEY_REGISTRATION_NODE)
+                        .equalTo(notificationRequest.getKiuwerToken());
+
+                Log.d(TAG, "KIUERTOKEN" + notificationRequest.getKiuwerToken());
+
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        HashMap<String, Object> dataRetrived = (HashMap<String, Object>) dataSnapshot
+                                .getValue();
+                        Log.d(TAG, "HASHMAP -> " + dataRetrived.toString());
+                        Set<String> keySet = dataRetrived.keySet();
+                        Log.d(TAG, "KEYSET -> " + keySet.toString());
+                        String usr = "";
+                        for (String key : keySet) {
+                            usr = key;
+                            Log.d(TAG, "KEY -> " + key);
+                            Log.d(TAG, "USR DENTRO L'IF -> " + usr);
+                        }
+                        Log.d(TAG, "USR FUORI DALL'IF -> " + usr);
+
+                        //creo sul database locale l'istanza dell'utente che ha accettato
+                        dbHelper = new DatabaseListHelperAdapter(getApplicationContext());
+                        dbHelper.open();
+                        cursor = dbHelper.createContact(User.getUserName(firebaseUser.getEmail()), usr,
+                                notificationRequest.getLocalData().toString(),
+                                notificationRequest.getPlaceAddress(), notificationRequest.getLocalTime(),
+                                notificationRequest.getPrice());
+                        //Toast.makeText(getApplicationContext(),"Ho imserito i dati nel db!!", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "scrivo nel db locale ->" + notificationRequest.toString());
+                        dbHelper.close();
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+            } else {
+                sendNotificationRequest(notificationRequest);
+            }
+            //sendNotificationRequest(notificationRequest);
         }
-
-
     }
 
-    private void sendNotificationRequest(NotificationRequest notificationData)
-    {
+    private void sendNotificationRequest(NotificationRequest notificationData) {
 
-        NotificationManager notificationManager=(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Intent actionIntentShowDetails;
         PendingIntent actionPendingIntentShowDetails;
 
@@ -123,6 +203,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
         final String contextTitle = this.getResources().getString(R.string.new_kiu_request);
         actionIntentShowDetails = new Intent(this, ShowRequestDetailActivity.class);
         Bundle c = new Bundle();
+
+        //inserisco i valori da passare all'activity.
         c.putString(LOCALDATA, notificationData.getLocalData());
         c.putString(ID, notificationData.getId());
         c.putString(LOCALTIME, notificationData.getLocalTime());
@@ -133,38 +215,27 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
         c.putString(LATITUDE, notificationData.getLatitude());
         c.putString(LONGITUDE, notificationData.getLongitude());
         c.putString(KIUERTOKEN, notificationData.getKiuwerToken());
-
-        //This is the value I want to pass
         actionIntentShowDetails.putExtras(c);
         //actionIntentShowDetails.putExtra("notificationData", notificationData.getLocalData());
-        actionIntentShowDetails.setAction(""+Math.random());
+        actionIntentShowDetails.setAction("" + Math.random());
         actionPendingIntentShowDetails = PendingIntent.getActivity(this,
                 0, actionIntentShowDetails, PendingIntent.FLAG_CANCEL_CURRENT);
         Notification notification = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_notifica3)
-             //   .setColor(Color.BLUE)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
                 .setAutoCancel(true)
                 .setContentIntent(actionPendingIntentShowDetails)
                 .setContentText(contextText)
-               // .addAction(R.drawable.ic_decline, "", actionPendingIntentShowDetails)
-                //.addAction(R.drawable.ic_rinegozia, "", actionPendingIntentShowDetails)  //TODO implementazione paolo
-                //.addAction(R.drawable.ic_accept,"", actionPendingIntentShowDetails)
                 .setContentTitle(contextTitle)
-               // .setStyle(new NotificationCompat.BigTextStyle()
-                 //       .bigText(R.string.kiuwername+":"+"picio \n"+R.string.location+":"+" via milano 11, gallipoli 73014\n"+
-                  //              +R.string.time+":"+"20:34\n"+R.string.date+":"+"13/04/2016\n"+R.string.rate+":euro "+"3.00"))
-                .setVibrate(new long[] { 0, 500, 500, 500, 500 }) // { delay, vibrate, sleep, vibrate, sleep }
-                //.setDefaults(Notification.DEFAULT_VIBRATE)
+                .setVibrate(new long[]{0, 500, 500, 500, 500}) // { delay, vibrate, sleep, vibrate, sleep }
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .build();
         notificationManager.notify(CUSTOM_ACTION_NOTIFICATION, notification);
     }
 
-    private void sendNotificationChaffer(NotificationChaffer notificationData)
-    {
+    private void sendNotificationChaffer(NotificationChaffer notificationData) {
 
-        NotificationManager notificationManager=(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Intent actionIntentShowDetails;
         PendingIntent actionPendingIntentShowDetails;
 
@@ -185,13 +256,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
         //This is the value I want to pass
         actionIntentShowDetails.putExtras(c);
         //actionIntentShowDetails.putExtra("notificationData", notificationData.getLocalData());
-        actionIntentShowDetails.setAction(""+Math.random());
+        actionIntentShowDetails.setAction("" + Math.random());
         actionPendingIntentShowDetails = PendingIntent.getActivity(this,
                 0, actionIntentShowDetails, PendingIntent.FLAG_CANCEL_CURRENT);
         Notification notification = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_notifica3)
                 //   .setColor(Color.BLUE)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
                 .setAutoCancel(true)
                 .setContentIntent(actionPendingIntentShowDetails)
                 .setContentText(contextText)
@@ -202,20 +273,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
                 // .setStyle(new NotificationCompat.BigTextStyle()
                 //       .bigText(R.string.kiuwername+":"+"picio \n"+R.string.location+":"+" via milano 11, gallipoli 73014\n"+
                 //              +R.string.time+":"+"20:34\n"+R.string.date+":"+"13/04/2016\n"+R.string.rate+":euro "+"3.00"))
-                .setVibrate(new long[] { 0, 500, 500, 500, 500 }) // { delay, vibrate, sleep, vibrate, sleep }
+                .setVibrate(new long[]{0, 500, 500, 500, 500}) // { delay, vibrate, sleep, vibrate, sleep }
                 //.setDefaults(Notification.DEFAULT_VIBRATE)
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .build();
         notificationManager.notify(CUSTOM_ACTION_NOTIFICATION, notification);
     }
 
-    public class NotificationChaffer extends NotificationData{
+    public class NotificationChaffer extends NotificationData {
 
-        private  String FROM ;  //il registration token del telefono da cui mandare la richiesta
-        private  String TO;  //il registration token del telefono a cui mandare la richiesta
-        private  String PRICE ;  //la tariffa proposta
-        private  String BUYER_NAME ;  //il nome del kiuwer
-        private  String SELLER_NAME ;  //il nome dell'helper
+        private String FROM;  //il registration token del telefono da cui mandare la richiesta
+        private String TO;  //il registration token del telefono a cui mandare la richiesta
+        private String PRICE;  //la tariffa proposta
+        private String BUYER_NAME;  //il nome del kiuwer
+        private String SELLER_NAME;  //il nome dell'helper
 
         public NotificationChaffer(String title, String body, String sound, String FROM,
                                    String SELLER_NAME, String BUYER_NAME, String PRICE, String TO,
@@ -228,7 +299,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
             this.TO = TO;
         }
 
-        public NotificationChaffer(){
+        public NotificationChaffer() {
             super();
         }
 
@@ -285,7 +356,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
         }
     }
 
-    public class NotificationRequest extends NotificationData{
+    public class NotificationRequest extends NotificationData {
 
         private String latitude;
         private String longitude;
@@ -299,7 +370,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
         private String helperToken;
         private String price;
 
-        public NotificationRequest(){
+        public NotificationRequest() {
             super();
         }
 

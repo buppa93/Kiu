@@ -47,7 +47,7 @@ public class FragmentsShowFeedback extends Fragment implements ValueEventListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        rootView = inflater.inflate(R.layout.fragment_fragment_show_feedback, container, false);
+        rootView = inflater.inflate(R.layout.fragment_show_feedback, container, false);
 
         myFeedbackList = (ListView) rootView.findViewById(R.id.my_feedback_list);
         top = (TextView) rootView.findViewById(R.id.text_top);

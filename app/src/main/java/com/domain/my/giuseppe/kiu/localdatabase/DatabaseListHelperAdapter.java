@@ -17,7 +17,8 @@ public class DatabaseListHelperAdapter {
     private static final String DATABASE_TABLE= "helper";
 
     public static final String KEY_ID="_id";
-    public static final String KEY_USERNAME = "username";
+    public static final String KEY_USERNAMEPROFILE="username_profile";
+    public static final String KEY_USERNAMEHELPER = "username_helper";
     public static final String KEY_DATE = "date";
     public static final String KEY_ADDRESS = "address";
     public static final String KEY_TIME = "time";
@@ -40,9 +41,10 @@ public class DatabaseListHelperAdapter {
         dbHelper.close();
     }
 
-    private ContentValues createContentValues(String username, String date, String address, String time, String money ) {
+    private ContentValues createContentValues(String usernameprofile, String usernamehelper, String date, String address, String time, String money ) {
         ContentValues values = new ContentValues();
-        values.put( KEY_USERNAME, username );
+        values.put(KEY_USERNAMEPROFILE, usernameprofile);
+        values.put(KEY_USERNAMEHELPER, usernamehelper );
         values.put( KEY_DATE, date );
         values.put( KEY_ADDRESS, address );
         values.put( KEY_TIME, time );
@@ -51,19 +53,21 @@ public class DatabaseListHelperAdapter {
         return values;
     }
 
+
     //TODO implementare metodi di aggiornamento di un singolo attributo in un record
     //create a contact
-    public long createContact(String username, String date, String address, String time, String money)
+    public long createContact(String usernameprofile, String usernamehelper, String date, String address, String time, String money)
     {
-        ContentValues initialValues =  createContentValues(username, date, address, time, money );
+        ContentValues initialValues =  createContentValues(usernameprofile,usernamehelper, date, address, time, money );
         return database.insertOrThrow(DATABASE_TABLE, null, initialValues);
     }
 
     //update a contact
-    public boolean updateContact( int id, String username, String date, String address, String time, String money ) {
+   /* public boolean updateContact( int id, String username, String date, String address, String time, String money ) {
         ContentValues updateValues = createContentValues(username, date, address, time, money );
-        return database.update(DATABASE_TABLE, updateValues, KEY_USERNAME + "=" + username, null) > 0;
-    }
+        return database.update(DATABASE_TABLE, updateValues, KEY_USERNAMEHELPER + "=" + username, null) > 0;
+    }*/
+
 
     //delete a contact
     public boolean deleteContact(String id) {
@@ -71,21 +75,22 @@ public class DatabaseListHelperAdapter {
     }
 
     //fetch all contacts
+    //fetch all contacts
     public Cursor fetchAllContacts() {
-       //return database.rawQuery( "select rowid _id,* from helper", null);
-       // return database.rawQuery( "select * from helper", null);
-        return database.query(DATABASE_TABLE, new String[]{KEY_ID, KEY_USERNAME, KEY_DATE, KEY_ADDRESS, KEY_TIME,
+        //return database.rawQuery( "select rowid _id,* from helper", null);
+        // return database.rawQuery( "select * from helper", null);
+        return database.query(DATABASE_TABLE, new String[]{KEY_ID,KEY_USERNAMEPROFILE, KEY_USERNAMEHELPER, KEY_DATE, KEY_ADDRESS, KEY_TIME,
                 KEY_MONEY}, null, null, null, null, null);
-        // return database.rawQuery(DATABASE_TABLE, new String[] { KEY_USERNAME, KEY_DATE, KEY_ADDRESS, KEY_TIME, KEY_MONEY});
-        //return database.rawQuery(DATABASE_TABLE, new String[] { KEY_USERNAME, KEY_DATE, KEY_ADDRESS, KEY_TIME, KEY_MONEY}, null, null, null, null, null);
-       // return database.query(DATABASE_TABLE, new String[] { KEY_USERNAME, KEY_DATE, KEY_ADDRESS, KEY_TIME, KEY_MONEY}, null, null, null, null, null);
+        // return database.rawQuery(DATABASE_TABLE, new String[] { KEY_USERNAMEHELPER, KEY_DATE, KEY_ADDRESS, KEY_TIME, KEY_MONEY});
+        //return database.rawQuery(DATABASE_TABLE, new String[] { KEY_USERNAMEHELPER, KEY_DATE, KEY_ADDRESS, KEY_TIME, KEY_MONEY}, null, null, null, null, null);
+        // return database.query(DATABASE_TABLE, new String[] { KEY_USERNAMEHELPER, KEY_DATE, KEY_ADDRESS, KEY_TIME, KEY_MONEY}, null, null, null, null, null);
     }
 
     //fetch contacts filter by a string
-    public Cursor fetchContactsByUsername(String filter) {
+    public Cursor fetchContactsByUsernameProfile(String filter) {
         Cursor mCursor = database.query(true, DATABASE_TABLE, new String[] {
-                KEY_ID, KEY_USERNAME, KEY_DATE, KEY_ADDRESS, KEY_TIME, KEY_MONEY },
-                KEY_USERNAME + " like '%"+ filter + "%'", null, null, null, null, null);
+                        KEY_ID, KEY_USERNAMEPROFILE, KEY_USERNAMEHELPER, KEY_DATE, KEY_ADDRESS, KEY_TIME, KEY_MONEY },
+                KEY_USERNAMEPROFILE + " like '%"+ filter + "%'", null, null, null, null, null);
 
         return mCursor;
     }

@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 /**
- * Created by ivasco92 on 12/01/17.
+ * Gestisce la modifica della password
  */
 
 public class PasswordDialogFragment extends DialogFragment {
@@ -26,37 +26,30 @@ public class PasswordDialogFragment extends DialogFragment {
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser user = auth.getCurrentUser();
 
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
-        // Get the layout inflater
         LayoutInflater inflater = this.getActivity().getLayoutInflater();
-
-        rootview=inflater.inflate(R.layout.alertdialog_updatepass,null);
+        rootview = inflater.inflate(R.layout.alertdialog_updatepass, null);
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(rootview)
-                // Add action buttons
                 .setPositiveButton(R.string.confirmbutton, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        // sign in the user ...
-
                         newpass = (EditText) rootview.findViewById(R.id.newpass);
                         repeatpass = (EditText) rootview.findViewById(R.id.repeatnewpass);
                         if (validateForm()) {
                             user.updatePassword(newpass.getText().toString());
-                            Toast.makeText(getContext(),"Password Aggiornata!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "Password Aggiornata!", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getContext(), "Password non aggiornata!", Toast.LENGTH_LONG).show();
                         }
-                        else{
-                            Toast.makeText(getContext(),"Password non aggiornata!", Toast.LENGTH_LONG).show();
-                        }
-
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {}
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
                 });
 
         return builder.create();

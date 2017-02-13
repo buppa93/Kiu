@@ -28,8 +28,7 @@ import com.google.firebase.storage.StorageReference;
 /**
  * Created by ivasco92 on 02/09/16.
  */
-public class AddRateDbAdapter extends CursorAdapter implements ValueEventListener
-{
+public class AddRateDbAdapter extends CursorAdapter implements ValueEventListener {
     private static final String TAG = "AddRateDbAdapter";
 
     TextView namefield;
@@ -41,6 +40,7 @@ public class AddRateDbAdapter extends CursorAdapter implements ValueEventListene
     RemoteDBAdapter remoteDBAdapter;
     de.hdodenhof.circleimageview.CircleImageView imageView;
     Bitmap bmp;
+
     public AddRateDbAdapter(Context context, Cursor cursor) {
         super(context, cursor, 0);
     }
@@ -52,23 +52,25 @@ public class AddRateDbAdapter extends CursorAdapter implements ValueEventListene
         return LayoutInflater.from(context).inflate(R.layout.item_addrate, parent, false);
     }
 
-    // The bindView method is used to bind all data to a given view
-    // such as setting the text on a TextView.
+    /**
+     * è usato per legare tutti i dati ad una data view
+     *
+     * @param view
+     * @param context
+     * @param cursor
+     */
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
         remoteDBAdapter = new RemoteDBAdapter();
-        // Find fields to populate in inflated template
-        namefield=(TextView) view.findViewById(R.id.namefieldaddrate);
-        filapresso=(TextView) view.findViewById(R.id.textView10);
-        addressfield=(TextView) view.findViewById(R.id.addressfieldaddrate);
-        imageView=(de.hdodenhof.circleimageview.CircleImageView) view.findViewById(R.id.firstprofile);
 
-        //TextView tvBody = (TextView) view.findViewById(R.id.tvBody);
-        //TextView tvPriority = (TextView) view.findViewById(R.id.tvPriority);
-        // Extract properties from cursor
+        namefield = (TextView) view.findViewById(R.id.namefieldaddrate);
+        filapresso = (TextView) view.findViewById(R.id.textView10);
+        addressfield = (TextView) view.findViewById(R.id.addressfieldaddrate);
+        imageView = (de.hdodenhof.circleimageview.CircleImageView) view.findViewById(R.id.firstprofile);
 
-        name= cursor.getString(cursor.getColumnIndex(cursor.getColumnName(1))); //"username"
-        address= cursor.getString(cursor.getColumnIndex(cursor.getColumnName(3)));//"address"
+        // Setta le stringhe con i dati presi dal database locale tramite il cursor
+        name = cursor.getString(cursor.getColumnIndex(cursor.getColumnName(2))); //"username"
+        address = cursor.getString(cursor.getColumnIndex(cursor.getColumnName(4)));//"address"
 
         //Recupero l'email dal database remoto
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -83,36 +85,31 @@ public class AddRateDbAdapter extends CursorAdapter implements ValueEventListene
 
         final long ONE_MEGABYTE = 1024 * 1024;
 
-        thumbnailRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>()
-        {
+        thumbnailRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
-            public void onSuccess(byte[] bytes)
-            {
+            public void onSuccess(byte[] bytes) {
                 bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 imageView.setImageBitmap(bmp);
             }
-        }).addOnFailureListener(new OnFailureListener()
-        {
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception e)
-            {Log.d("AddRateDbAdapter", "Errore download thumbnail");}
+            public void onFailure(@NonNull Exception e) {
+                Log.d("AddRateDbAdapter", "Errore download thumbnail");
+            }
         });
 
-
-        // Populate fields with extracted properties
+        // popola i campi con le stringhe
         namefield.setText(name);
         addressfield.setText(address);
-       // tvBody.setText(body);
-        //tvPriority.setText(String.valueOf(priority));
     }
 
     @Override
-    public void onDataChange(DataSnapshot dataSnapshot)
-    {
+    public void onDataChange(DataSnapshot dataSnapshot) {
         email = dataSnapshot.getValue(String.class);
         Log.d(TAG, "email -> " + email);
     }
 
     @Override
-    public void onCancelled(DatabaseError databaseError) {}
+    public void onCancelled(DatabaseError databaseError) {
+    }
 }

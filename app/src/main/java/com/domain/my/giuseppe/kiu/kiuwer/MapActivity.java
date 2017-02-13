@@ -19,8 +19,9 @@ import android.widget.Toast;
 
 import com.domain.my.giuseppe.kiu.R;
 import com.domain.my.giuseppe.kiu.localdatabase.DatabaseListHelperAdapter;
+import com.domain.my.giuseppe.kiu.localdatabase.DatabaseListKiuer;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDatabaseString;
-import com.domain.my.giuseppe.kiu.service.RequestService;
+import com.domain.my.giuseppe.kiu.notification.RequestService;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -80,6 +81,8 @@ public class MapActivity extends AppCompatActivity implements
     private static final String COORDINATES = "coordinates";
     private static final String RAY = "ray";
     Bundle receive;
+
+    DatabaseListKiuer databaseListKiuer;
 
     Map<String, Object> data;
 
@@ -146,6 +149,9 @@ public class MapActivity extends AppCompatActivity implements
                                         Double.parseDouble(data.get(LONGITUDE).toString()),
                                         FirebaseInstanceId.getInstance().getToken());
                                 request.execute();*/
+
+
+                                
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                                 DatabaseReference mDatabaseRef = database.getReference();
                                 //Getting only available helpers
@@ -176,7 +182,9 @@ public class MapActivity extends AppCompatActivity implements
                                                                 .toString()),
                                                         FirebaseInstanceId.getInstance().getToken(),
                                                         0);
+                                                Log.d(TAG,request.toString());
                                                 request.execute();
+
                                             }
 
                                     @Override
@@ -240,14 +248,14 @@ public class MapActivity extends AppCompatActivity implements
                     yourinfoTitle.setText(marker.getTitle());
                     infoButtonListener.setMarker(marker);
 
-                    //TODO insert rating value on rating bar from (database?)
-                    dbHelper= new DatabaseListHelperAdapter(getApplicationContext());
+                   // insert rating value on rating bar from (database?)
+                  /*  dbHelper= new DatabaseListHelperAdapter(getApplicationContext());
                     dbHelper.open();
                      cursor=dbHelper.createContact("mario", (String) data.get(DATE).toString(),
                              (String) data.get(PLACEDETAILS), (String) data.get(TIME),
                              (String) data.get(RATE));
                     Toast.makeText(getApplicationContext(),"Ho imserito i dati nel db!!", Toast.LENGTH_SHORT).show();
-                    dbHelper.close();
+                    dbHelper.close();*/
                 }
                 catch (IOException e) {
                     e.printStackTrace();

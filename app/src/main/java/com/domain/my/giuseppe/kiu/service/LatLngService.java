@@ -15,7 +15,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.domain.my.giuseppe.kiu.R;
-import com.domain.my.giuseppe.kiu.kiuwer.Kiuwer;
+import com.domain.my.giuseppe.kiu.kiuwer.MainActivity;
 import com.domain.my.giuseppe.kiu.model.User;
 import com.domain.my.giuseppe.kiu.remotedatabase.RemoteDBAdapter;
 import com.google.android.gms.common.ConnectionResult;
@@ -95,7 +95,7 @@ public class LatLngService extends Service implements GoogleApiClient.Connection
                 }
             }
         };
-        final Intent notificationIntent = new Intent(getApplicationContext(), Kiuwer.class);
+        final Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
         Log.i("notify","STO MANDANDO PARAMETRO BOOL");
         notificationIntent.putExtra("fromNotification", true);
         final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);

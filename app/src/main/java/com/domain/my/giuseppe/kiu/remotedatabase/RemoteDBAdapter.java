@@ -19,8 +19,7 @@ import java.util.Map;
 /**
  * Created by giuseppe on 22/07/16.
  */
-public class RemoteDBAdapter
-{
+public class RemoteDBAdapter {
     FirebaseDatabase database;
     public Feedback lastFeedback;
 
@@ -29,8 +28,7 @@ public class RemoteDBAdapter
     /**
      * Builder for this class
      */
-    public RemoteDBAdapter()
-    {
+    public RemoteDBAdapter() {
         Log.d(TAG, "Sto creando l'istanza di RemoteDBAdapter");
         database = FirebaseDatabase.getInstance();
     }
@@ -40,8 +38,7 @@ public class RemoteDBAdapter
      */
 
     //TODO da riscrivere urgente!
-    public void writeUser()
-    {
+    public void writeUser() {
         Log.d(TAG, "Sono in writeUser()");
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -64,17 +61,14 @@ public class RemoteDBAdapter
         mDatabase.setValue(userData);
     }
 
-    public void upgradeAveragePrices(final double price)
-    {
+    public void upgradeAveragePrices(final double price) {
         final DatabaseReference reference = database.getReference()
                 .child(RemoteDatabaseString.KEY_AVERAGE_PRICES);
 
-        reference.addListenerForSingleValueEvent(new ValueEventListener()
-        {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                HashMap<String,Object> data = (HashMap<String,Object>) dataSnapshot.getValue();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                HashMap<String, Object> data = (HashMap<String, Object>) dataSnapshot.getValue();
 
                 int n = Integer.parseInt(data.get(RemoteDatabaseString.KEY_N).toString());
                 double sum = Double.parseDouble(data.get(RemoteDatabaseString.KEY_SUM).toString());
@@ -90,17 +84,18 @@ public class RemoteDBAdapter
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
     }
 
     /**
      * aggiorna il nuovo token sul database al nodo utente
-     * @param user utente loggato
+     *
+     * @param user     utente loggato
      * @param newToken nuovo token da inserire
      */
-    public void updateRegistrationToken(String user, String newToken)
-    {
+    public void updateRegistrationToken(String user, String newToken) {
         Log.d(TAG, "Sono in updateRegistrationToken()");
         DatabaseReference databaseReference = database.getReference()
                 .child(RemoteDatabaseString.KEY_USER_NODE);
@@ -113,11 +108,11 @@ public class RemoteDBAdapter
 
     /**
      * Leave a Feedback to a specific user
+     *
      * @param username the username of the user
      * @param feedback the feedback as to leave
      */
-    public void leaveFeedback(String username, Feedback feedback)
-    {
+    public void leaveFeedback(String username, Feedback feedback) {
         Log.d(TAG, "Sono leaveFeedback()");
         DatabaseReference databaseReference = database.getReference()
                 .child(RemoteDatabaseString.KEY_USER_NODE);
@@ -130,17 +125,16 @@ public class RemoteDBAdapter
 
     /**
      * replaces the . with the , inside a string
+     *
      * @param email the string to be analyzed
      * @return the string transformed
      */
-    public static String transformEmail(String email)
-    {
+    public static String transformEmail(String email) {
         Log.d(TAG, "Sono in transformEmail()");
         String transformedEmail = "";
 
-        for(int i=0; i<email.length(); i++)
-        {
-            if(email.charAt(i)=='.')
+        for (int i = 0; i < email.length(); i++) {
+            if (email.charAt(i) == '.')
                 transformedEmail += ",";
             else
                 transformedEmail += email.charAt(i);
@@ -151,17 +145,16 @@ public class RemoteDBAdapter
 
     /**
      * replaces the , with the . inside a string
+     *
      * @param email the string to be analyzed
      * @return the string transformed
      */
-    public static String restoreEmail(String email)
-    {
+    public static String restoreEmail(String email) {
         Log.d(TAG, "restoreEmail()");
         String restoredEmail = "";
 
-        for(int i=0; i<email.length(); i++)
-        {
-            if(email.charAt(i)==',')
+        for (int i = 0; i < email.length(); i++) {
+            if (email.charAt(i) == ',')
                 restoredEmail += ".";
             else
                 restoredEmail += email.charAt(i);
@@ -172,19 +165,18 @@ public class RemoteDBAdapter
 
     /**
      * Transform a string in a double and raplace , with .
+     *
      * @param coord a string representing a coordinate point
      * @return the transformed coordinate point
      */
-    public static double restoreCoord(String coord)
-    {
+    public static double restoreCoord(String coord) {
         Log.d(TAG, "Sono in restoreCoord()");
         double converted;
         String str = "";
 
-        for(int i=0; i<coord.length(); i++)
-        {
-            if(coord.charAt(i)==',')
-                str +='.';
+        for (int i = 0; i < coord.length(); i++) {
+            if (coord.charAt(i) == ',')
+                str += '.';
             else
                 str += coord.charAt(i);
         }
@@ -195,19 +187,18 @@ public class RemoteDBAdapter
 
     /**
      * Transform a double in a strig and raplace . with ,
+     *
      * @param coord the coordinate point
      * @return the transformed coordinate point
      */
-    public static String trasformCoord(double coord)
-    {
+    public static String trasformCoord(double coord) {
         Log.d(TAG, "trasformCoord()");
         String str = "";
         String toStr = String.valueOf(coord);
 
-        for(int i=0; i<toStr.length(); i++)
-        {
-            if(toStr.charAt(i)=='.')
-                str +=',';
+        for (int i = 0; i < toStr.length(); i++) {
+            if (toStr.charAt(i) == '.')
+                str += ',';
             else
                 str += toStr.charAt(i);
         }
@@ -217,36 +208,37 @@ public class RemoteDBAdapter
 
     /**
      * Set latitude and longitude of the user's account
+     *
      * @param latitude
      * @param longitude
      */
-    public void setLatLngAttribute(String username, String latitude, String longitude){
+    public void setLatLngAttribute(String username, String latitude, String longitude) {
         final DatabaseReference databaseReference = database.getReference().child
                 (RemoteDatabaseString.KEY_USER_NODE).child(username);
         // Log.v("USERNAME", UserLoggingDetails.getIstance().getName());
-        Log.d("USERNAME",User.getUserName(FirebaseAuth.getInstance()
+        Log.d("USERNAME", User.getUserName(FirebaseAuth.getInstance()
                 .getCurrentUser().getEmail()));
-        Map<String,Object> data = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
         data.put(RemoteDatabaseString.KEY_LATITUDE, latitude);
-        data.put(RemoteDatabaseString.KEY_LONGITUDE,longitude);
+        data.put(RemoteDatabaseString.KEY_LONGITUDE, longitude);
         databaseReference.updateChildren(data);
 
     }
 
     /**
      * set availability attribute on database by username.
+     *
      * @param value
      */
-    public void SetAvailabilityAttribute (boolean value) {
+    public void SetAvailabilityAttribute(boolean value) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String mail = user.getEmail();
         String username = User.getUserName(mail);
         DatabaseReference databaseReference = database.getReference()
                 .child(RemoteDatabaseString.KEY_USER_NODE).child(username).child(RemoteDatabaseString.KEY_AVAILABILITY);
-        if(value==true){
+        if (value == true) {
             databaseReference.setValue(RemoteDatabaseString.KEY_AVAILABILITY_YES);
-        }
-        else{
+        } else {
             databaseReference.setValue(RemoteDatabaseString.KEY_AVAILABILITY_NO);
         }
     }

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="80dp">
+    android:layout_height="100dp"
+    android:background="@drawable/my_listview_item"
+    >
 
     <TextView
         android:layout_width="wrap_content"
@@ -13,52 +17,104 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp" />
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColor="#111111" />
 
-    <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/rating"
-        android:numStars="5"
-        android:stepSize="1"
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_alignWithParentIfMissing="false"
-        android:paddingLeft="0dp"
-        android:layout_below="@+id/date"
-        android:layout_alignLeft="@+id/contact"
-        android:layout_alignStart="@+id/contact" />
+    <ImageView
+        app:srcCompat="@mipmap/azur_marker"
+        android:id="@+id/imageView15"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/contact"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
+        android:text="data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="distance"
-        android:id="@+id/distance"
-        android:layout_alignTop="@+id/contact"
+        android:id="@+id/data_request"
+        android:layout_below="@+id/local_request"
+        android:layout_toRightOf="@+id/imageView15"
+        android:layout_toEndOf="@+id/imageView15"
+        android:paddingTop="5dp" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        app:srcCompat="@mipmap/ic_calendar_check"
+        android:id="@+id/imageView16"
+        android:paddingLeft="5dp"
+        android:layout_below="@+id/imageView15"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="2dp" />
+
+    <TextView
+        android:text="location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/local_request"
+        android:layout_above="@+id/imageView16"
+        android:layout_toRightOf="@+id/imageView15"
+        android:layout_toEndOf="@+id/imageView15" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:srcCompat="@mipmap/ic_clock"
+        android:layout_marginLeft="60dp"
+        android:layout_marginStart="60dp"
+        android:id="@+id/imageView17"
+        android:layout_alignTop="@+id/imageView16"
+        android:layout_toRightOf="@+id/local_request"
+        android:layout_toEndOf="@+id/local_request" />
+
+    <TextView
+        android:text="time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/time_request"
+        android:layout_alignBaseline="@+id/data_request"
+        android:layout_alignBottom="@+id/data_request"
+        android:layout_toRightOf="@+id/imageView17"
+        android:layout_toEndOf="@+id/imageView17"
+        android:layout_marginLeft="5dp" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/data_request"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/imageView18"
+        android:layout_marginLeft="6dp"
+        android:src="@drawable/ic_feedback" />
+
+    <TextView
+        android:text="rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rating_request"
+        android:layout_alignBottom="@+id/imageView18"
+        android:layout_toRightOf="@+id/imageView16"
+        android:layout_toEndOf="@+id/imageView16"
+        android:textColor="#111111" />
+
+    <TextView
+        android:text="euro€"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/euro_request"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="date "
-        android:id="@+id/date"
-        android:layout_below="@+id/distance"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="rate"
-        android:id="@+id/rate"
-        android:layout_below="@+id/date"
-        android:layout_alignRight="@+id/date"
-        android:layout_alignEnd="@+id/date" />
+        android:textColor="#688a23"
+        android:layout_marginBottom="10dp" />
 
 </RelativeLayout>

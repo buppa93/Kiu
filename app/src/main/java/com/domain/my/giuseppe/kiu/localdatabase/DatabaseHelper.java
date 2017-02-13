@@ -29,7 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
             "CREATE TABLE IF NOT EXISTS helper " +
                     "(" +
                     "_id integer primary key autoincrement, "+
-                    "username text not null, " +
+                    "username_profile text not null,"+
+                    "username_helper text not null, " +
                     "date text not null, " +
                     "address text not null, " +
                     "time not null, " +
@@ -41,14 +42,18 @@ public class DatabaseHelper extends SQLiteOpenHelper
             "CREATE TABLE IF NOT EXISTS kiuer " +
                     "(" +
                     "id integer primary key autoincrement, " +
-                    "mail text not null, " +
-                    "feedback float null, " +
-                    "address text not null, " +
-                    "date text not null, " +
-                    "hour text not null, " +
-                    "rate float null, " +
-                    "distance float null, " +
-                    "seen integer " +
+                    "token text not null, " +
+                    "feedback text null, " +
+                    "local_place text not null, " +
+                    "local_address text not null, " +
+                    "local_date text not null, " +
+                    "local_time text not null, " +
+                    "price text null, " +
+                    "note text , " +
+                    "latitude text not null, " +
+                    "longitude text not null, " +
+                    "visibility integer, " +
+                    "accepted integer" +
                     ");";
     //End Donato
     // Costruttore

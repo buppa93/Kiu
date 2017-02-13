@@ -61,7 +61,7 @@ public class FragmentHome extends Fragment
                              Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        rootView =  inflater.inflate(R.layout.content_home_layout, container, false);
+        rootView =  inflater.inflate(R.layout.fragment_home_kiuer, container, false);
 
         //inizializzo la data
         dateED = (EditText) rootView.findViewById(R.id.dateED);
