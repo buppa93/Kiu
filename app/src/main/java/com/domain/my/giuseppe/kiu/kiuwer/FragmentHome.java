@@ -97,7 +97,7 @@ public class FragmentHome extends Fragment
 
         //Preparo la searchBar
         searchBar = new SupportPlaceAutocompleteFragment();
-        getFragmentManager().beginTransaction().replace(R.id.serachAutocompleteContainer,
+        getFragmentManager().beginTransaction().replace(R.id.searchAutocompleteContainer,
                 searchBar).commit();
 
         //Referenza al nodo del db che contiene la media delle tariffe
