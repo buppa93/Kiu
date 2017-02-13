@@ -71,6 +71,7 @@ public class HttpRequestManager {
 
         try
         {
+            //"http://kiuapp.altervista.org/fcmServer.php"
             paginaURL = new URL("http://kiuapp.altervista.org/fcmServer.php");
             // creo l'oggetto HttpURLConnection paragonabile all'apertura di una finestra del browser
             HttpURLConnection client = (HttpURLConnection) paginaURL.openConnection();

@@ -22,6 +22,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
     private static final String PROVA="prova messaggio";
     private static final String LOCALDATA="localdata";
     private static final String ID="id";
+    private static final String ID_TYPE="idType";
     private static final String LOCALTIME="localtime";
     private static final String PLACENAME="placename";
     private static final String PLACEADDRESS="placeaddress";
@@ -46,7 +47,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
     {
         NotificationChaffer notificationChaffer = new NotificationChaffer();
         NotificationRequest notificationRequest = new NotificationRequest();
-        int id = Integer.parseInt(message.getData().get(ID));
+        int id = Integer.parseInt(message.getData().get(ID_TYPE));
 
         //se l'id =3 la notifica è una notifica di richiesta negoziazione,  se l'id è 2 è una normale richiesta di fila
         if(id==3){
@@ -69,6 +70,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
 
         }else{
             notificationRequest.setId(message.getData().get("id"));
+            notificationRequest.setIdType(message.getData().get("idType"));
             notificationRequest.setLocalData(message.getData().get("localData"));
             notificationRequest.setLocalTime(message.getData().get("localTime"));
             notificationRequest.setPlaceName(message.getData().get("placeName"));
@@ -125,6 +127,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
         Bundle c = new Bundle();
         c.putString(LOCALDATA, notificationData.getLocalData());
         c.putString(ID, notificationData.getId());
+        c.putString(ID_TYPE, notificationData.getIdType());
         c.putString(LOCALTIME, notificationData.getLocalTime());
         c.putString(PLACEADDRESS, notificationData.getPlaceAddress());
         c.putString(PLACENAME, notificationData.getPlaceName());
@@ -295,6 +298,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
         private String placeAddress;
         private String note;
         private String id;
+        private String idType;
         private String kiuwerToken;
         private String helperToken;
         private String price;
@@ -306,8 +310,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
         public NotificationRequest(String title, String body, String sound, String latitude,
                                    String longitude, String localData, String localTime,
                                    String placeName, String placeAddress, String note, String id,
-                                   String kiuwerToken, String helperToken, String price,
-                                   int accepted) {
+                                   String idType, String kiuwerToken, String helperToken,
+                                   String price, int accepted) {
             super(title, body, sound, accepted);
             this.latitude = latitude;
             this.longitude = longitude;
@@ -317,6 +321,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
             this.placeAddress = placeAddress;
             this.note = note;
             this.id = id;
+            this.idType = idType;
             this.kiuwerToken = kiuwerToken;
             this.helperToken = helperToken;
             this.price = price;
@@ -385,6 +390,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
         public void setId(String id) {
             this.id = id;
         }
+
+        public String getIdType() {
+            return idType;
+        }
+
+        public void setIdType(String idType) {this.idType = idType;}
 
         public String getKiuwerToken() {
             return kiuwerToken;

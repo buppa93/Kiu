@@ -62,6 +62,7 @@ public class ShowRequestDetailActivity extends AppCompatActivity implements OnMa
     String kiuertoken;
     private static final String LOCALDATA = "localdata";
     private static final String ID = "id";
+    private static final String ID_TYPE = "idType";
     private static final String LOCALTIME = "localtime";
     private static final String PLACENAME = "placename";
     private static final String PLACEADDRESS = "placeaddress";

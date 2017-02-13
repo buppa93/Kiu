@@ -77,6 +77,7 @@ public class HttpChafferManager {
 
         try
         {
+            //"http://kiuapp.altervista.org/chafferSrv.php"
             paginaURL = new URL("http://kiuapp.altervista.org/chafferSrv.php");
             // creo l'oggetto HttpURLConnection paragonabile all'apertura di una finestra del browser
             HttpURLConnection client = (HttpURLConnection) paginaURL.openConnection();
