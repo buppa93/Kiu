@@ -23,6 +23,7 @@ public class HttpRequestManager {
     public final static String TAG = "HttpRequestManager";
 
     private int id;
+    private int idType;
     private String localData;
     private String localTime;
     private String placeName;
@@ -33,36 +34,19 @@ public class HttpRequestManager {
     private double longitude;
     private int accepted; //0 if not accepted 1 else
 
-    @Override
-    public String toString() {
-        return "HttpRequestManager{" +
-                "id=" + id +
-                ", localData='" + localData + '\'' +
-                ", localTime='" + localTime + '\'' +
-                ", placeName='" + placeName + '\'' +
-                ", placeAddress='" + placeAddress + '\'' +
-                ", note='" + note + '\'' +
-                ", price=" + price +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", accepted=" + accepted +
-                ", destTokens='" + destTokens + '\'' +
-                ", myTokens='" + myTokens + '\'' +
-                '}';
-    }
-
     private String destTokens;
 
     private String myTokens;
 
 
 
-    public HttpRequestManager(int id, String localData, String localTime, String placeName,
-                              String placeAddress, String note, String destTokens,
+    public HttpRequestManager(int id,  int idType, String localData, String localTime,
+                              String placeName, String placeAddress, String note, String destTokens,
                               double price, double latitude, double longitude, String myTokens,
                               int accepted)
     {
         this.id = id;
+        this.idType = idType;
         this.localData = localData;
         this.localTime = localTime;
         this.placeName = placeName;
@@ -88,7 +72,7 @@ public class HttpRequestManager {
         try
         {
             Log.d(TAG,"Sono in sendrequest()");
-            paginaURL = new URL("http://kiu.duckdns.org/fcmServer.php");
+            paginaURL = new URL("http://kiuapp.altervista.org/fcmServer.php");
             // creo l'oggetto HttpURLConnection paragonabile all'apertura di una finestra del browser
             HttpURLConnection client = (HttpURLConnection) paginaURL.openConnection();
             client.setRequestMethod(METHOD_POST);
@@ -130,6 +114,10 @@ public class HttpRequestManager {
     public void setId(int id) {
         this.id = id;
     }
+
+    public int getIdType() {return this.idType;}
+
+    public void setIdType(int idType) {this.idType = idType;}
 
     public String getLocalData() {
         return localData;
@@ -262,6 +250,7 @@ public class HttpRequestManager {
             jsonObj. put("placeAddress", this.getPlaceAddress());
             jsonObj. put("note", this.getNote());
             jsonObj. put("id", this.getNote());
+            jsonObj.put("idType", this.getIdType());
             jsonObj. put("price", this.getPrice());
             jsonObj. put("latitude", this.getLatitude());
             jsonObj. put("longitude", this.getLongitude());

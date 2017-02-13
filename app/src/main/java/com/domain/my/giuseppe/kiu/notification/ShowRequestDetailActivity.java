@@ -146,7 +146,7 @@ public class ShowRequestDetailActivity extends AppCompatActivity implements OnMa
                             public void onClick(DialogInterface dialog, int which) {
                                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                                RequestChaffer requestChaffer = new RequestChaffer(3,
+                                RequestChaffer requestChaffer = new RequestChaffer(
                                         FirebaseInstanceId.getInstance().getToken(),
                                         bundle.getString(KIUERTOKEN),
                                         input.getText().toString(),

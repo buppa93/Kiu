@@ -2,6 +2,8 @@ package com.domain.my.giuseppe.kiu.notification;
 
 import android.os.AsyncTask;
 
+import java.util.Random;
+
 
 /**
  * Created by PaoloPepe on 11/01/2017.
@@ -10,6 +12,7 @@ import android.os.AsyncTask;
 public class RequestChaffer extends AsyncTask<Void, Void, Void> {
 
     private  int ID ;   //id casuale
+    private int IDTYPE;
     private  String FROM ;  //il registration token del telefono da cui mandare la richiesta
     private  String TO;  //il registration token del telefono a cui mandare la richiesta
     private  String PRICE ;  //la tariffa proposta
@@ -17,11 +20,15 @@ public class RequestChaffer extends AsyncTask<Void, Void, Void> {
     private  String SELLER_NAME ;  //il nome dell'helper
     private  int ACCEPTED;
 
+    private static final int IDTYPENUMBER = 2;
+    private static final int MAXIDNUMBER =3600;
 
-    public RequestChaffer(int id, String from, String to, String price, String buyerName,
+
+    public RequestChaffer(String from, String to, String price, String buyerName,
                           String sellerName, int accepted) {
 
-        this.ID = id;
+        this.ID = makeRandomID();
+        this.IDTYPE = IDTYPENUMBER;
         this.FROM = from;
         this.TO = to;
         this.PRICE = price;
@@ -33,10 +40,16 @@ public class RequestChaffer extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params){
-        HttpChafferManager httpChafferManager = new HttpChafferManager(ID, FROM, TO,PRICE,
+        HttpChafferManager httpChafferManager = new HttpChafferManager(ID, IDTYPE, FROM, TO,PRICE,
                 BUYER_NAME,SELLER_NAME,ACCEPTED);
         httpChafferManager.sendRequest();
         return null;
 
+    }
+
+    private int makeRandomID()
+    {
+        Random random = new Random();
+        return random.nextInt(MAXIDNUMBER);
     }
 }
