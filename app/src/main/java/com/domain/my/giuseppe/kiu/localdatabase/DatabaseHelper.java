@@ -11,7 +11,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 {
 
     private static final String DATABASE_NAME = "kiu.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Lo statement SQL di creazione del database
     private static final String DATABASE_CREATE_HISTORY =
