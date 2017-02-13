@@ -7,9 +7,12 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 
 public class HttpRequestManager {
 
@@ -20,6 +23,7 @@ public class HttpRequestManager {
     public final static String TAG = "HttpRequestManager";
 
     private int id;
+    private int idType;
     private String localData;
     private String localTime;
     private String placeName;
@@ -36,12 +40,13 @@ public class HttpRequestManager {
 
 
 
-    public HttpRequestManager(int id, String localData, String localTime, String placeName,
-                              String placeAddress, String note, String destTokens,
+    public HttpRequestManager(int id, int idType, String localData, String localTime,
+                              String placeName, String placeAddress, String note, String destTokens,
                               double price, double latitude, double longitude, String myTokens,
                               int accepted)
     {
         this.id = id;
+        this.idType = idType;
         this.localData = localData;
         this.localTime = localTime;
         this.placeName = placeName;
@@ -66,7 +71,7 @@ public class HttpRequestManager {
 
         try
         {
-            paginaURL = new URL("http://kiu.duckdns.org/fcmServer.php");
+            paginaURL = new URL("http://kiuapp.altervista.org/fcmServer.php");
             // creo l'oggetto HttpURLConnection paragonabile all'apertura di una finestra del browser
             HttpURLConnection client = (HttpURLConnection) paginaURL.openConnection();
             client.setRequestMethod(METHOD_POST);
@@ -108,6 +113,10 @@ public class HttpRequestManager {
     public void setId(int id) {
         this.id = id;
     }
+
+    public int getIdType() {return this.idType;}
+
+    public void setIdType(int idType) {this.idType = idType;}
 
     public String getLocalData() {
         return localData;
@@ -234,18 +243,19 @@ public class HttpRequestManager {
     {
         JSONObject jsonObj= new JSONObject();
         try {
-            jsonObj. put("localData", this.getLocalData());
-            jsonObj. put("localTime", this.getLocalTime());
-            jsonObj. put("placeName", this.getPlaceName());
-            jsonObj. put("placeAddress", this.getPlaceAddress());
-            jsonObj. put("note", this.getNote());
-            jsonObj. put("id", this.getNote());
-            jsonObj. put("price", this.getPrice());
-            jsonObj. put("latitude", this.getLatitude());
-            jsonObj. put("longitude", this.getLongitude());
-            jsonObj. put("myToken", this.getMyTokens());
-            jsonObj. put("destToken", this.getDestTokens());
-            jsonObj. put("accepted", this.getAccepted());
+            jsonObj.put("localData", this.getLocalData());
+            jsonObj.put("localTime", this.getLocalTime());
+            jsonObj.put("placeName", this.getPlaceName());
+            jsonObj.put("placeAddress", this.getPlaceAddress());
+            jsonObj.put("note", this.getNote());
+            jsonObj.put("id", this.getId());
+            jsonObj.put("id_type", this.getIdType());
+            jsonObj.put("price", this.getPrice());
+            jsonObj.put("latitude", this.getLatitude());
+            jsonObj.put("longitude", this.getLongitude());
+            jsonObj.put("mytoken", this.getMyTokens());
+            jsonObj.put("destToken", this.getDestTokens());
+            jsonObj.put("accepted", this.getAccepted());
             return jsonObj.toString();
 
         } catch (JSONException e) {

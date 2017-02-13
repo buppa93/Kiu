@@ -95,6 +95,13 @@ public class FragmentHome extends Fragment
         //istanzio lo spinner per il raggio di ricerca
         spinner = (Spinner) rootView.findViewById(R.id.rayspinner);
 
+
+
+        //Preparo la searchBar
+        searchBar = new SupportPlaceAutocompleteFragment();
+        getFragmentManager().beginTransaction().replace(R.id.serachAutocompleteContainer,
+                searchBar).commit();
+
         //Referenza al nodo del db che contiene la media delle tariffe
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference()
@@ -128,11 +135,6 @@ public class FragmentHome extends Fragment
 
                     public void onNothingSelected(AdapterView<?> parent) {}
                 });
-
-                //Preparo la searchBar
-                searchBar = new SupportPlaceAutocompleteFragment();
-                getFragmentManager().beginTransaction().replace(R.id.serachAutocompleteContainer,
-                        searchBar).commit();
 
                 //Instanzio l'ascoltatore per la searchBar
                 searchBar.setOnPlaceSelectedListener(new PlaceSelectionListener()

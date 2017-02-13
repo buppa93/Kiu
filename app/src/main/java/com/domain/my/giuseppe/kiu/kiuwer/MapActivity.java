@@ -162,7 +162,7 @@ public class MapActivity extends AppCompatActivity implements
                                                 String tok;
                                                 tok = (String) dataSnapshot.getValue();
                                                 Log.d(TAG,"TOKEN" + tok);
-                                                RequestService request = new RequestService(2,
+                                                RequestService request = new RequestService(
                                                         (String) data.get(DATE),
                                                         (String) data.get(TIME),
                                                         (String) data.get(PLACENAME),

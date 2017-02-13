@@ -17,19 +17,22 @@ import java.net.URL;
 
 public class HttpChafferManager {
 
-    private  int ID;   //id casuale
-    private  String FROM;  //il registration token del telefono da cui mandare la richiesta
-    private  String TO ;  //il registration token del telefono a cui mandare la richiesta
-    private  String PRICE ;  //la tariffa proposta
-    private  String BUYER_NAME ;  //il nome del kiuwer
-    private  String SELLER_NAME ;  //il nome dell'helper
+    private int ID;   //id casuale
+    private int IDTYPE;
+    private String FROM;  //il registration token del telefono da cui mandare la richiesta
+    private String TO ;  //il registration token del telefono a cui mandare la richiesta
+    private String PRICE ;  //la tariffa proposta
+    private String BUYER_NAME ;  //il nome del kiuwer
+    private String SELLER_NAME ;  //il nome dell'helper
     private int FLAG_ACCEPTED; //0 if not accepted 1 else
     private final static String METHOD_POST = "POST";
     public final static String TAG = "HttpChafferManager";
 
-    public HttpChafferManager(int id, String from, String to, String price, String buyerName, String sellerName, int accepted){
+    public HttpChafferManager(int id, int idType, String from, String to, String price,
+                              String buyerName, String sellerName, int accepted){
 
         this.ID = id;
+        this.IDTYPE= idType;
         this.FROM = from;
         this.TO = to;
         this.PRICE = price;
@@ -42,6 +45,8 @@ public class HttpChafferManager {
     public int getID() {
         return ID;
     }
+
+    public int getIDTYPE() {return IDTYPE;}
 
     public String getFROM() {
         return FROM;
@@ -72,7 +77,7 @@ public class HttpChafferManager {
 
         try
         {
-            paginaURL = new URL("http://kiu.duckdns.org/chafferSrv.php");
+            paginaURL = new URL("http://kiuapp.altervista.org/chafferSrv.php");
             // creo l'oggetto HttpURLConnection paragonabile all'apertura di una finestra del browser
             HttpURLConnection client = (HttpURLConnection) paginaURL.openConnection();
             client.setRequestMethod(METHOD_POST);
@@ -96,12 +101,14 @@ public class HttpChafferManager {
     {
         JSONObject jsonObj= new JSONObject();
         try {
-            jsonObj. put("from", this.getFROM());
-            jsonObj. put("to", this.getTO());
-            jsonObj. put("price", this.getPRICE());
-            jsonObj. put("buyer_name", this.getBuyerName());
-            jsonObj. put("seller_name", this.getSellerName());
-            jsonObj. put("accepted", this.getFLAG_ACCEPTED());
+            jsonObj.put("id", this.getID());
+            jsonObj.put("id-type", this.getIDTYPE());
+            jsonObj.put("from", this.getFROM());
+            jsonObj.put("to", this.getTO());
+            jsonObj.put("price", this.getPRICE());
+            jsonObj.put("buyer_name", this.getBuyerName());
+            jsonObj.put("seller_name", this.getSellerName());
+            jsonObj.put("accepted", this.getFLAG_ACCEPTED());
             return jsonObj.toString();
 
         } catch (JSONException e) {
